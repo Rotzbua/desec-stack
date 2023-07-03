@@ -44,21 +44,13 @@
                                     :disabled="true"
                                     validate-on-blur
                             />
-                            <v-text-field
-                                    v-model="password"
-                                    :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-                                    prepend-icon="mdi-blank"
-                                    outlined
-                                    label="Password"
-                                    required
-                                    :rules="[rules.required]"
-                                    :type="show ? 'text' : 'password'"
-                                    :error-messages="password_errors"
-                                    @change="password_errors=[]"
-                                    @click:append="show = !show"
-                                    ref="password"
-                                    tabindex="1"
-                            ></v-text-field>
+
+                            <generic-password
+                                v-model="password"
+                                ref="password"
+                                tabindex="1"
+                            />
+
                             <v-text-field
                                     v-model="new_email"
                                     label="New Email"
@@ -92,12 +84,13 @@
 <script>
   import { HTTP, withWorking ,digestError} from '@/utils';
   import {email_pattern} from '@/validation';
-  
   import ErrorAlert from "@/components/ErrorAlert.vue";
+  import GenericPassword from "@/components/Field/GenericPassword.vue";
 
   export default {
     name: 'ChangeEmail',
     components: {
+      GenericPassword,
       ErrorAlert,
     },
     data: () => ({
@@ -114,7 +107,6 @@
 
       /* password field */
       password: '',
-      password_errors: [],
 
       /* email field */
       new_email: '',
