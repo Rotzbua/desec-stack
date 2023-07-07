@@ -39,18 +39,11 @@
                                 </p>
                             </v-alert>
 
-                            <v-text-field
-                                    v-model="email"
-                                    label="Email"
-                                    prepend-icon="mdi-email"
-                                    outlined
-                                    required
-                                    :rules="email_rules"
-                                    :error-messages="email_errors"
-                                    @change="email_errors=[]"
-                                    validate-on-blur
-                                    ref="emailField"
-                                    tabindex="1"
+                            <generic-email
+                                v-model="email"
+                                :autofocus="true"
+                                :new="true"
+                                tabindex="1"
                             />
 
                               <v-container class="pa-0">
@@ -119,9 +112,9 @@
 
 <script>
   import axios from 'axios';
-  import {email_pattern} from '@/validation';
   import {digestError} from '@/utils';
   import ErrorAlert from '@/components/ErrorAlert.vue';
+  import GenericEmail from "@/components/Field/GenericEmail.vue";
 
   const HTTP = axios.create({
     baseURL: '/api/v1/',
@@ -131,6 +124,7 @@
   export default {
     name: 'ResetPassword',
     components: {
+      GenericEmail,
       ErrorAlert,
     },
     data: () => ({
@@ -143,7 +137,6 @@
 
       /* email field */
       email: '',
-      email_rules: [v => !!email_pattern.test(v || '') || 'We need an email address for account recovery and technical support.'],
       email_errors: [],
 
       /* captcha field */
@@ -157,7 +150,6 @@
         this.email = this.$route.params.email;
       }
       this.getCaptcha();
-      this.initialFocus();
     },
     methods: {
       async getCaptcha(focus = false) {
@@ -171,9 +163,6 @@
         } finally {
           this.captchaWorking = false;
         }
-      },
-      async initialFocus() {
-        return this.$refs.emailField.focus();
       },
       async resetPassword() {
         if (!this.$refs.form.validate()) {
