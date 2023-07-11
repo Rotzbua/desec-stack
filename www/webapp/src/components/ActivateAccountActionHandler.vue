@@ -58,7 +58,7 @@
         >Submit</v-btn>
     </div>
     <v-alert type="success" v-if="success">
-      <p>{{ this.response.data.detail }}</p>
+      <p>{{ response.data.detail }}</p>
     </v-alert>
   </div>
 </template>

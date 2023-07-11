@@ -18,17 +18,17 @@
                   dark
                   flat
           >
-            <v-toolbar-title class="capitalize">{{ this.$route.params.action | replace(/-/g, ' ') }} Confirmation</v-toolbar-title>
+            <v-toolbar-title class="capitalize">{{ $route.params.action | replace(/-/g, ' ') }} Confirmation</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
             <error-alert :errors="errors"></error-alert>
             <v-form @submit.prevent="confirm" class="mb-4" v-model="valid" ref="form">
               <div
-                      :is="this.actionHandler"
-                      :payload="this.post_payload"
-                      :response="this.post_response"
-                      :valid="this.valid"
-                      :working="this.working"
+                      :is="actionHandler"
+                      :payload="post_payload"
+                      :response="post_response"
+                      :valid="valid"
+                      :working="working"
                       ref="actionHandler"
                       @autosubmit="confirm"
                       @clearerrors="clearErrors"

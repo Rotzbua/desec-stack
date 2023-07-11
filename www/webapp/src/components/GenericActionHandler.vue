@@ -4,7 +4,7 @@
       <v-progress-circular align="center" indeterminate></v-progress-circular>
     </div>
     <v-alert type="success" v-if="success">
-      <p>{{ this.response.data.detail }}</p>
+      <p>{{ response.data.detail }}</p>
     </v-alert>
     <p>
       Questions? Please check out our forum at <a href="https://talk.desec.io/">talk.desec.io</a>. Chances are

@@ -332,7 +332,7 @@
           <component
                   :is="extraComponentName"
                   v-bind="extraComponentBind"
-                  @input="() => { this.extraComponentName = ''; }"
+                  @input="() => { extraComponentName = ''; }"
           ></component>
         </v-card>
       </v-col>
