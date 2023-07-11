@@ -81,13 +81,13 @@
                                           v-if="captcha && !captchaWorking && captcha_kind === 'image'"
                                           :src="'data:image/png;base64,'+captcha.challenge"
                                           alt="Passwords can also be reset by sending an email to our support."
-                                    />
+                                    >
                                     <audio controls
                                           v-if="captcha && !captchaWorking && captcha_kind === 'audio'"
                                     >
-                                      <source :src="'data:audio/wav;base64,'+captcha.challenge" type="audio/wav"/>
+                                      <source :src="'data:audio/wav;base64,'+captcha.challenge" type="audio/wav">
                                     </audio>
-                                    <br/>
+                                    <br>
                                     <v-btn-toggle>
                                       <v-btn text outlined @click="getCaptcha(true)" :disabled="captchaWorking"><v-icon>mdi-refresh</v-icon></v-btn>
                                     </v-btn-toggle>

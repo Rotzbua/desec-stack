@@ -145,8 +145,8 @@
         <div>
           <p>{{email}}</p>
           <p>
-            Kyffhäuserstraße 5<br/>
-            10781 Berlin<br/>
+            Kyffhäuserstraße 5<br>
+            10781 Berlin<br>
             Germany
           </p>
         </div>
@@ -168,9 +168,9 @@
         <div>
           <p>Vorstand</p>
           <p class="white--text text--darken-2">
-            Nils Wisiol<br/>
-            Peter Thomassen<br/>
-            Wolfgang Studier<br/>
+            Nils Wisiol<br>
+            Peter Thomassen<br>
+            Wolfgang Studier<br>
           </p>
         </div>
       </div>
