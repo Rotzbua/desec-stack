@@ -37,7 +37,7 @@
         <v-card-text v-if="!!data && !successDetail" class="text-center">
           <p class="mt-2">
             <v-icon>{{ mdiNumeric1Circle }}</v-icon>
-            Please scan the following QR code with an authenticator app (e.g. Google Authenticator).<br >
+            Please scan the following QR code with an authenticator app (e.g. Google Authenticator).<br>
             <strong>This code is only displayed once.</strong>
           </p>
           <div class="text-center">
@@ -80,7 +80,7 @@
           <v-divider class="my-4"/>
           <p>
             <small>
-            Want to know what's in the code? — It's your TOTP secret:<br >
+            Want to know what's in the code? — It's your TOTP secret:<br>
             {{ data.secret }}</small>
           </p>
         </v-card-text>

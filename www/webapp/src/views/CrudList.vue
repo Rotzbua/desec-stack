@@ -36,7 +36,7 @@
               <!-- Headline & Toolbar, Including New Form -->
               <v-toolbar flat>
                 <v-toolbar-title>{{ headlines.table }}</v-toolbar-title>
-                <v-spacer />
+                <v-spacer/>
                 <v-text-field
                         v-model="search"
                         v-if="$vuetify.breakpoint.smAndUp"
@@ -52,7 +52,7 @@
                     label="Show advanced settings"
                     class="mt-6"
                 />
-                <v-spacer />
+                <v-spacer/>
                 <v-btn
                         id="create"
                         color="primary"
@@ -85,12 +85,12 @@
                     <v-form v-model="valid" @submit.prevent="save()">
                       <v-card-title>
                         <span class="text-h5">{{ headlines.create }}</span>
-                        <v-spacer />
+                        <v-spacer/>
                         <v-icon @click.stop="close">
                           {{ mdiClose }}
                         </v-icon>
                       </v-card-title>
-                      <v-divider />
+                      <v-divider/>
                       <v-progress-linear
                               v-if="createDialogWorking"
                               height="2"
@@ -162,7 +162,7 @@
                       </v-card-text>
 
                       <v-card-actions class="pb-4">
-                        <v-spacer />
+                        <v-spacer/>
                         <v-btn
                                 color="primary"
                                 class="grow"
@@ -183,7 +183,7 @@
                         >
                           Save
                         </v-btn>
-                        <v-spacer />
+                        <v-spacer/>
                       </v-card-actions>
                     </v-form>
                   </v-card>
@@ -279,7 +279,7 @@
                   <span class="text-h5">{{ headlines.destroy }}</span>
                 </v-card-title>
 
-                <v-divider />
+                <v-divider/>
                 <v-progress-linear
                   v-if="destroyDialogWorking"
                   height="2"
@@ -305,7 +305,7 @@
                 </v-card-text>
 
                 <v-card-actions>
-                  <v-spacer />
+                  <v-spacer/>
                   <v-btn
                     color="primary"
                     class="grow"
@@ -324,7 +324,7 @@
                   >
                     Delete
                   </v-btn>
-                  <v-spacer />
+                  <v-spacer/>
                 </v-card-actions>
               </v-form>
             </v-card>

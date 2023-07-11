@@ -1,7 +1,7 @@
 <template>
   <v-alert :value="!!(errors && errors.length)" type="error" style="overflow: auto;">
     <div v-if="errors.length > 1">
-      <li v-for="(error, idx) of errors" :key="idx" >
+      <li v-for="(error, idx) of errors" :key="idx">
         {{ error }}
       </li>
     </div>
