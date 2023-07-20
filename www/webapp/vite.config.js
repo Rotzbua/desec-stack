@@ -19,6 +19,14 @@ export default defineConfig({
     ],
     server: {
         port: 8080,
+        proxy: {
+            '/api': {
+                target: "https://desec.io",
+                changeOrigin: true,
+                secure: true,
+                // rewrite: path => path.replace('/api', ''),
+            }
+        }
     },
     resolve: {
         alias: [{
