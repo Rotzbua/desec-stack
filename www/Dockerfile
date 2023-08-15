@@ -24,10 +24,12 @@ COPY webapp/ /usr/src/app/
 RUN npm run build -- --emptyOutDir false
 
 
-FROM nginx:mainline-alpine
+#FROM nginx:mainline-alpine
+FROM alpine
 
 # Add dependencies for our scripts
 RUN apk add --no-cache bash openssl inotify-tools
+RUN apk add --no-cache brotli nginx nginx-mod-http-brotli envsubst
 
 # nginx configuration and entrypoint
 COPY conf /etc/nginx
@@ -41,7 +43,8 @@ VOLUME /etc/ssl/private
 VOLUME /var/www/html
 
 # mountable content for web app (remove default stuff in there)
-RUN rm /usr/share/nginx/html/*
+#RUN rm /usr/share/nginx/html/*
+RUN mkdir /usr/share/nginx/html
 COPY html/503.html /usr/share/nginx/html
 COPY --from=webapp /usr/src/app/dist /usr/share/nginx/html
 
