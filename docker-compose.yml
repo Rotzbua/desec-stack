@@ -290,42 +290,6 @@ services:
         tag: "desec/memcached"
     restart: unless-stopped
 
-  openvpn-server:
-    build: openvpn-server
-    image: desec/openvpn-server:latest
-    init: true
-    cap_add:
-    - NET_ADMIN
-    ports:
-    - "1194:1194/udp"
-    volumes:
-    - ./openvpn-server/secrets:/etc/openvpn/secrets:ro
-    - openvpn-server_logs:/var/log/openvpn
-    networks:
-      rearreplication:
-        ipv4_address: ${DESECSTACK_IPV4_REAR_PREFIX16}.7.2
-    logging:
-      driver: "syslog"
-      options:
-        tag: "desec/openvpn-server"
-    restart: unless-stopped
-
-  openvpn-server_monitor:
-    image: kumina/openvpn-exporter:v0.2.2
-    init: true
-    depends_on:
-    - openvpn-server
-    volumes:
-    - openvpn-server_logs:/var/log/openvpn:ro
-    networks:
-    - rearmonitoring_openvpn-server
-    command: -openvpn.status_paths /var/log/openvpn/openvpn-status.log
-    logging:
-      driver: "syslog"
-      options:
-        tag: "desec/openvpn-server_monitor"
-    restart: unless-stopped
-
   prometheus:
     image: prom/prometheus:latest
     init: true
