@@ -28,7 +28,7 @@ FROM nginx:mainline-alpine
 
 # Add dependencies for our scripts
 RUN apk add --no-cache bash openssl inotify-tools
-RUN apk add --no-cache brotli nginx-mod-http-brotli envsubst
+RUN apk add --no-cache brotli nginx-mod-http-brotli
 
 # nginx configuration and entrypoint
 COPY conf /etc/nginx
