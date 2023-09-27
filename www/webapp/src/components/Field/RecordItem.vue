@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { requiredUnless } from 'vuelidate/lib/validators';
+import { requiredUnless } from '@vuelidate/validators';
 
 export default {
   name: 'RecordItem',

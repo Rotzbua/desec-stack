@@ -1,5 +1,5 @@
 <script>
-import { integer, between } from 'vuelidate/lib/validators';
+import { integer, between } from '@vuelidate/validators';
 import RecordItem from './RecordItem.vue';
 
 const MAX8 = 255;

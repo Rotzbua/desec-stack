@@ -1,5 +1,5 @@
 <script>
-import { helpers } from 'vuelidate/lib/validators';
+import { helpers } from '@vuelidate/validators';
 import RecordItem from './RecordItem.vue';
 
 const txtToken = helpers.regex('txtToken', /^".*"$/);

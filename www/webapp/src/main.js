@@ -11,7 +11,7 @@ import "@fontsource/roboto/500.css" /* medium */
 import "@fontsource/roboto/700.css" /* bold */
 import '@mdi/font/css/materialdesignicons.css'
 import {createPinia, PiniaVuePlugin} from "pinia";
-
+import { useVuelidate } from '@vuelidate/core'
 
 Vue.config.productionTip = false
 Vue.use(Vuelidate)
@@ -23,6 +23,7 @@ Vue.use(VueRouter)
 
 new Vue({
   router,
+  useVuelidate,
   pinia,
   vuetify,
   render: h => h(App)

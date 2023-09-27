@@ -1,5 +1,5 @@
 <script>
-import { and, helpers, integer, between } from 'vuelidate/lib/validators';
+import { and, helpers, integer, between } from '@vuelidate/validators';
 import RecordItem from './RecordItem.vue';
 
 const hex = helpers.regex('hex', /^([0-9a-fA-F]\s*)*[0-9a-fA-F]$/);

@@ -1,5 +1,5 @@
 <script>
-import { helpers, integer, between } from 'vuelidate/lib/validators';
+import { helpers, integer, between } from '@vuelidate/validators';
 import RecordItem from './RecordItem.vue';
 
 // Allow for root label only

@@ -1,5 +1,5 @@
 <script>
-import { ipAddress } from 'vuelidate/lib/validators';
+import { ipAddress } from '@vuelidate/validators';
 import RecordItem from './RecordItem.vue';
 
 export default {

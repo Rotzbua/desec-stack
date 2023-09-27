@@ -1,5 +1,5 @@
 <script>
-import { helpers } from 'vuelidate/lib/validators';
+import { helpers } from '@vuelidate/validators';
 import RecordItem from './RecordItem.vue';
 
 const hostname = helpers.regex('hostname', /^((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z0-9_-]+\.)+[a-zA-Z]{2,}))[.]?$/);
