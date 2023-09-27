@@ -251,7 +251,7 @@
   };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   .fixed-width {
     font-family: monospace;
   }

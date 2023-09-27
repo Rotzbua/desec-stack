@@ -70,7 +70,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 /* Removes dropdown icon from read-only select */
 .v-application--is-ltr .v-text-field.v-input--is-disabled .v-input__append-inner {
   display: none;

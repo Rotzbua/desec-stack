@@ -68,7 +68,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .v-textarea textarea {
   font-family: monospace;
   font-size: 80%;

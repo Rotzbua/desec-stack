@@ -92,7 +92,7 @@
 <script>
   import { HTTP, withWorking ,digestError} from '@/utils';
   import {email_pattern} from '@/validation';
-  
+
   import ErrorAlert from "@/components/ErrorAlert.vue";
 
   export default {
@@ -162,7 +162,7 @@
   };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
     .uppercase input {
         text-transform: uppercase;
     }
