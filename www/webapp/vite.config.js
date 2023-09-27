@@ -5,12 +5,14 @@ import Components from 'unplugin-vue-components/vite'
 import {VuetifyResolver} from 'unplugin-vue-components/resolvers'
 import legacy from '@vitejs/plugin-legacy'
 import vue from '@vitejs/plugin-vue2'
+import {imagetools} from 'vite-imagetools'
 
 export default defineConfig({
     define: {
         'process.env.BUILD': '"web"' // fix for vuelidate@0.7.7
     },
     plugins: [
+        imagetools({force: true}),
         vue(),
         Components({
             resolvers: [VuetifyResolver()],

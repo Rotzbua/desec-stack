@@ -138,7 +138,7 @@
       <v-row justify="center">
         <v-col class="py-4 text-center">
           <a href="https://nextcloud.com/"><img loading="lazy" :src="require('../assets/non-free/nextcloud-logo-inverted.svg')" alt="Nextcloud Logo" class="mx-6 my-2" style="display: inline-block; max-height: 113px; max-width: 160px; width: 100%"/></a>
-          <a href="https://www.hanssonit.se/"><img loading="lazy" :src="require('../assets/non-free/hanssonit.logo.png')" alt="Hansson IT Logo" class="mx-6 my-2" style="display: inline-block; max-height: 113px; max-width: 160px; width: 100%"/></a>
+          <a href="https://www.hanssonit.se/"><img loading="lazy" :src="imgUrl" alt="Hansson IT Logo" class="mx-6 my-2" style="display: inline-block; max-height: 113px; max-width: 160px; width: 100%"/></a>
         </v-col>
       </v-row>
     </v-container>
@@ -209,7 +209,9 @@
     z-index: 2;
   }
 </style>
-
+<script setup>
+import imgUrl from  '../assets/non-free/hanssonit.logo.png?w=500;700;900;1200&format=avif&as=srcset'
+</script>
 <script>
 import {email_pattern} from '@/validation';
 import {useUserStore} from "@/store/user";

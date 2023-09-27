@@ -2,6 +2,7 @@
   "name": "webapp",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "serve": "vite preview",
@@ -29,9 +30,10 @@
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-vue": "^9.15.1",
     "eslint-plugin-vuetify": "^1.1.0",
-    "sass": "~1.67.0",
+    "sass": "~1.32.13",
     "unplugin-vue-components": "^0.25.1",
     "vite": "^4.4.5",
+    "vite-imagetools": "^5.0.8",
     "vuetify-loader": "~1.9.1"
   }
 }
