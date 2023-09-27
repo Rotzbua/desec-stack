@@ -27,7 +27,8 @@
       <br>
       <v-btn-toggle>
         <v-btn text outlined @click="getCaptcha(true)" :aria-label="l.newCaptcha" :disabled="working">
-          <v-icon>{{ mdiRefresh }}</v-icon>
+          <v-icon v-if="!working">{{ mdiRefresh }}</v-icon>
+          <v-icon v-if="working" class="icon-spinner">{{ mdiRefresh }}</v-icon>
         </v-btn>
       </v-btn-toggle>
       &nbsp;
@@ -132,3 +133,19 @@ export default {
   },
 };
 </script>
+
+<style>
+.icon-spinner {
+  animation: spin-animation 1.5s infinite;
+  display: inline-block;
+}
+
+@keyframes spin-animation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(359deg);
+  }
+}
+</style>
