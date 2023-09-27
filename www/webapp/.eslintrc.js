@@ -38,6 +38,10 @@ module.exports = {
     'vue/no-deprecated-v-on-number-modifiers': 'warn', // Preparation for vue3
     'vue/no-deprecated-html-element-is': 'warn', // Preparation for vue3
     'vue/match-component-file-name': ['error', {'extensions': ['vue'], 'shouldMatchCase': true}],
+    'vue/html-closing-bracket-spacing': 'warn',
+    'vue/html-self-closing': 'warn',
+    'vue/no-lone-template': 'warn',
+    'vue/require-default-prop': 'warn'
   },
   ignorePatterns: ['**/src/modules/**/*'],
 }
