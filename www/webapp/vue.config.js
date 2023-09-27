@@ -14,4 +14,15 @@ module.exports = {
         }
       });
   },
+  devServer:{
+      port: 8080,
+      proxy: {
+        '/api': {
+          target: "https://desec.io",
+          changeOrigin: true,
+          secure: true,
+          // rewrite: path => path.replace('/api', ''),
+        }
+      }
+  },
 };
