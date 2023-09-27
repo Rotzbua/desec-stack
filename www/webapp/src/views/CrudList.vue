@@ -195,10 +195,11 @@
             <template
               v-for="(column, id) in columns"
               #[column.name]="itemFieldProps"
+              :key="id"
             >
               <component
                 :is="column.datatype"
-                :key="id"
+
                 :readonly="column.readonly"
                 :disabled="user.working || itemIsReadOnly(itemFieldProps.item)"
                 v-model="itemFieldProps.item[column.value]"

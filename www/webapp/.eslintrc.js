@@ -5,10 +5,10 @@ module.exports = {
     node: true
   },
   extends: [
-    'plugin:vue/essential',
+    'plugin:vue/vue3-essential',
     // 'plugin:vue/strongly-recommended',
     // 'plugin:vue/recommended',
-    'plugin:vuetify/base',
+    // 'plugin:vuetify/base',
     'eslint:recommended'
   ],
   rules: {
@@ -22,6 +22,8 @@ module.exports = {
     'vue/no-deprecated-filter': 'warn', // Preparation for vue3
     'vue/no-deprecated-v-on-number-modifiers': 'warn', // Preparation for vue3
     'vue/no-deprecated-html-element-is': 'warn', // Preparation for vue3
+    'vue/no-deprecated-v-on-native-modifier': "off",
+    'vue/no-v-for-template-key-on-child ': "off",
   },
   ignorePatterns: ['**/src/modules/**/*'],
   parserOptions: {
