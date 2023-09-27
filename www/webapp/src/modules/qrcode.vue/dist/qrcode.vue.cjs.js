@@ -4,7 +4,9 @@
  * © 2017-2023 @scopewu(https://github.com/scopewu)
  * MIT License.
  */
-import { defineComponent, ref, onUpdated, h, onMounted } from 'vue';
+'use strict';
+
+var vue = require('vue');
 
 /******************************************************************************
 Copyright (c) Microsoft Corporation.
@@ -991,12 +993,12 @@ var QRCodeVueProps = __assign(__assign({}, QRCodeProps), { renderAs: {
         default: 'canvas',
         validator: function (as) { return ['canvas', 'svg'].indexOf(as) > -1; },
     } });
-var QRCodeSvg = defineComponent({
+var QRCodeSvg = vue.defineComponent({
     name: 'QRCodeSvg',
     props: QRCodeProps,
     setup: function (props) {
-        var numCells = ref(0);
-        var fgPath = ref('');
+        var numCells = vue.ref(0);
+        var fgPath = vue.ref('');
         var generate = function () {
             var value = props.value, level = props.level, margin = props.margin;
             var cells = QR.QrCode.encodeText(value, ErrorCorrectLevelMap[level]).getModules();
@@ -1010,27 +1012,27 @@ var QRCodeSvg = defineComponent({
             fgPath.value = generatePath(cells, margin);
         };
         generate();
-        onUpdated(generate);
-        return function () { return h('svg', {
+        vue.onUpdated(generate);
+        return function () { return vue.h('svg', {
             width: props.size,
             height: props.size,
             'shape-rendering': "crispEdges",
             xmlns: 'http://www.w3.org/2000/svg',
             viewBox: "0 0 ".concat(numCells.value, " ").concat(numCells.value),
         }, [
-            h('path', {
+            vue.h('path', {
                 fill: props.background,
                 d: "M0,0 h".concat(numCells.value, "v").concat(numCells.value, "H0z"),
             }),
-            h('path', { fill: props.foreground, d: fgPath.value }),
+            vue.h('path', { fill: props.foreground, d: fgPath.value }),
         ]); };
     },
 });
-var QRCodeCanvas = defineComponent({
+var QRCodeCanvas = vue.defineComponent({
     name: 'QRCodeCanvas',
     props: QRCodeProps,
     setup: function (props) {
-        var canvasEl = ref(null);
+        var canvasEl = vue.ref(null);
         var generate = function () {
             var value = props.value, level = props.level, size = props.size, margin = props.margin, background = props.background, foreground = props.foreground;
             var canvas = canvasEl.value;
@@ -1063,24 +1065,24 @@ var QRCodeCanvas = defineComponent({
                 });
             }
         };
-        onMounted(generate);
-        onUpdated(generate);
-        return function () { return h('canvas', {
+        vue.onMounted(generate);
+        vue.onUpdated(generate);
+        return function () { return vue.h('canvas', {
             ref: canvasEl,
             style: { width: "".concat(props.size, "px"), height: "".concat(props.size, "px") },
         }); };
     },
 });
-var QrcodeVue = defineComponent({
+var QrcodeVue = vue.defineComponent({
     name: 'Qrcode',
     render: function () {
         var _a = this.$props, renderAs = _a.renderAs, value = _a.value, _size = _a.size, _margin = _a.margin, _level = _a.level, background = _a.background, foreground = _a.foreground;
         var size = _size >>> 0;
         var margin = _margin >>> 0;
         var level = validErrorCorrectLevel(_level) ? _level : defaultErrorCorrectLevel;
-        return h(renderAs === 'svg' ? QRCodeSvg : QRCodeCanvas, { value: value, size: size, margin: margin, level: level, background: background, foreground: foreground });
+        return vue.h(renderAs === 'svg' ? QRCodeSvg : QRCodeCanvas, { value: value, size: size, margin: margin, level: level, background: background, foreground: foreground });
     },
     props: QRCodeVueProps,
 });
 
-export { QrcodeVue as default };
+module.exports = QrcodeVue;

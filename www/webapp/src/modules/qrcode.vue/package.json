@@ -1,18 +1,25 @@
 {
   "name": "qrcode.vue",
-  "version": "1.7.0",
-  "description": "A Vue component to generate QRCode.",
-  "main": "dist/qrcode.vue.js",
-  "module": "dist/qrcode.vue.esm.js",
+  "version": "3.4.0",
+  "description": "A Vue.js component to generate QRCode.",
+  "type": "module",
+  "main": "./dist/qrcode.vue.cjs.js",
+  "module": "./dist/qrcode.vue.esm.js",
+  "browser": "./dist/qrcode.vue.browser.js",
+  "unpkg": "./dist/qrcode.vue.browser.min.js",
+  "jsdelivr": "./dist/qrcode.vue.browser.min.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/qrcode.vue.esm.js",
+      "require": "./dist/qrcode.vue.cjs.js"
+    },
+    "./package": "./package.json"
+  },
   "scripts": {
-    "start": "webpack-dev-server --config webpack.config.js --open",
-    "clean": "rimraf -- dist",
-    "build:es": "cross-env NODE_ENV=es rollup -c",
-    "build:umd": "cross-env NODE_ENV=development rollup -c",
-    "build:umd:min": "cross-env NODE_ENV=production rollup -c",
-    "build": "npm run clean && npm run build:es && npm run build:umd && npm run build:umd:min",
-    "lint": "eslint --ext .js,.vue src",
-    "prepublish": "npm run build"
+    "start": "webpack serve --config webpack.config.js --mode=development",
+    "build": "rollup -c"
   },
   "repository": {
     "type": "git",
@@ -24,68 +31,37 @@
     "component",
     "code",
     "qrcode",
+    "QR code",
     "二维码"
   ],
   "files": [
     "/dist",
-    "/src",
-    "/docs",
-    "README-zh_cn.md"
+    "README-zh_cn.md",
+    "README.md"
   ],
   "author": "scope.wu <scope.wu@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/scopewu/qrcode.vue/issues"
   },
-  "homepage": "https://scopewu.github.io/qrcode.vue/",
+  "homepage": "https://qr-vue.tie.pub",
   "peerDependencies": {
-    "vue": "^2.0.0"
+    "vue": "^3.0.0"
   },
   "dependencies": {},
   "devDependencies": {
-    "@babel/core": "^7.5.5",
-    "@babel/preset-env": "^7.5.5",
-    "babel-loader": "^8.0.6",
-    "cross-env": "^5.2.1",
-    "css-loader": "^3.2.0",
-    "eslint": "^6.3.0",
-    "eslint-plugin-vue": "^5.2.3",
-    "html-webpack-plugin": "^3.2.0",
-    "husky": "^3.0.5",
-    "prettier": "1.18.2",
-    "pretty-quick": "^1.11.1",
-    "qr.js": "^0.0.0",
-    "rimraf": "^3.0.0",
-    "rollup": "^1.20.3",
-    "rollup-plugin-babel": "^4.3.2",
-    "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-node-resolve": "^5.0.0",
-    "rollup-plugin-replace": "^2.2.0",
-    "rollup-plugin-uglify": "^6.0.3",
-    "style-loader": "^1.0.0",
-    "vue": "^2.6.10",
-    "webpack": "^4.39.3",
-    "webpack-cli": "^3.3.7",
-    "webpack-dev-server": "^3.8.0"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged"
-    }
-  },
-  "prettier": {
-    "singleQuote": true,
-    "trailingComma": "es5",
-    "printWidth": 80,
-    "arrowParens": "always",
-    "semi": false
-  },
-  "eslintConfig": {
-    "extends": [
-      "plugin:vue/recommended"
-    ],
-    "rules": {
-      "vue/no-unused-vars": "error"
-    }
+    "@rollup/plugin-terser": "^0.4.1",
+    "@vue/compiler-sfc": "^3.2.47",
+    "@vue/server-renderer": "^3.2.47",
+    "html-webpack-plugin": "^5.5.0",
+    "rollup": "^3.20.2",
+    "rollup-plugin-typescript2": "^0.34.1",
+    "ts-loader": "^9.4.2",
+    "typescript": "^5.0.4",
+    "vue": "^3.2.47",
+    "vue-loader": "^17.0.1",
+    "webpack": "^5.79.0",
+    "webpack-cli": "^5.0.1",
+    "webpack-dev-server": "^4.13.2"
   }
 }
