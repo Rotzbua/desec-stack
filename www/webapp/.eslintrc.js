@@ -19,6 +19,7 @@ module.exports = {
     // 'plugin:vue-scoped-css/vue3-recommended',
     'plugin:vuetify/base',
     'plugin:import/recommended',
+    'plugin:vuejs-accessibility/recommended',
     'eslint:recommended',
   ],
   settings: {
@@ -40,6 +41,8 @@ module.exports = {
     'vue/no-deprecated-v-on-number-modifiers': 'warn', // Preparation for vue3
     'vue/no-deprecated-html-element-is': 'warn', // Preparation for vue3
     'vue/match-component-file-name': ['error', {'extensions': ['vue'], 'shouldMatchCase': true}],
+    'vuejs-accessibility/tabindex-no-positive': 'off',
+    'vuejs-accessibility/no-autofocus': 'off',
   },
   ignorePatterns: ['**/src/modules/**/*'],
 }
