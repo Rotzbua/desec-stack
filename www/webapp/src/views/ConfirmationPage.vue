@@ -129,9 +129,6 @@
 </script>
 
 <style lang="scss" scoped>
-  .fixed-width {
-    font-family: monospace;
-  }
   .capitalize {
     text-transform: capitalize;
   }
