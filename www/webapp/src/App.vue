@@ -2,11 +2,10 @@
   <v-app id="inspire">
     <v-navigation-drawer
             v-model="drawer"
-            app
-            right
+            location="right"
             disable-resize-watcher
     >
-      <v-list dense>
+      <v-list density="compact">
         <v-list-item
                 v-for="(item, key) in menu"
                 :key="key"
@@ -19,38 +18,38 @@
           <v-list-item-content>
             <v-list-item-title>
               {{ item.text }}
-              <v-icon :color="item.post_icon_color" class="text--darken-2" small v-if="item.post_icon">{{ item.post_icon }}</v-icon>
+              <v-icon :color="item.post_icon_color" size="small" v-if="item.post_icon">{{ item.post_icon }}</v-icon>
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app class="white">
+    <v-app-bar app class="bg-white">
       <v-toolbar-title><router-link :to="{name: 'home'}">
         <v-img
                 :src="require('./assets/logo.svg')"
                 alt="deSEC Logo"
                 eager
-                contain
+                cover
         ></v-img>
       </router-link></v-toolbar-title>
       <v-spacer/>
       <div class="d-none d-md-block">
         <span class="mx-2" v-for="(item, key) in menu" :key="key">
           <router-link
-                  class="primary--text text--darken-2"
+                  class="text-primary-darken-2"
                   :to="{name: item.name}"
           >{{ item.text }}</router-link>
-          <v-icon :color="item.post_icon_color" class="ml-1 text--darken-1" small v-if="item.post_icon">{{ item.post_icon }}</v-icon>
+          <v-icon :color="item.post_icon_color" class="ml-1 text--darken-1" size="small" v-if="item.post_icon">{{ item.post_icon }}</v-icon>
         </span>
       </div>
-      <v-btn class="mx-4" color="primary" depressed :to="{name: 'signup', query: $route.query}" v-if="!user.authenticated">Create Account</v-btn>
-      <v-btn class="mx-4 mr-0" color="primary" depressed :to="{name: 'login'}" v-if="!user.authenticated">Log In</v-btn>
-      <v-btn class="mx-4 mr-0" color="primary" depressed outlined @click="logout" v-if="user.authenticated">Log Out</v-btn>
+      <v-btn class="mx-4" color="primary" variant="flat" :to="{name: 'signup', query: $route.query}" v-if="!user.authenticated">Create Account</v-btn>
+      <v-btn class="mx-4 mr-0" color="primary" variant="flat" :to="{name: 'login'}" v-if="!user.authenticated">Log In</v-btn>
+      <v-btn class="mx-4 mr-0" color="primary" variant="outlined" @click="logout" v-if="user.authenticated">Log Out</v-btn>
       <v-app-bar-nav-icon class="d-md-none" @click.stop="drawer = !drawer" />
       <template #extension v-if="user.authenticated">
-        <v-tabs background-color="primary darken-1" fixed-tabs>
+        <v-tabs bg-color="primary darken-1" fixed-tabs>
           <v-tab
             v-for="(item, key) in tabmenu"
             :key="key"
@@ -60,21 +59,20 @@
           </v-tab>
           <v-spacer></v-spacer>
           <v-menu
-                  bottom
-                  left
+                  location="bottom left"
           >
             <template #activator="{ on }">
               <v-btn
-                      text
+                      variant="text"
                       class="align-self-center mr-4"
                       v-on="on"
               >
                 more
-                <v-icon right>{{ mdiMenuDown }}</v-icon>
+                <v-icon end>{{ mdiMenuDown }}</v-icon>
               </v-btn>
             </template>
 
-            <v-list class="grey lighten-3">
+            <v-list class="bg-grey-lighten-3">
               <v-list-item
                       v-for="(item, key) in tabmenumore"
                       :key="key"
@@ -102,7 +100,7 @@
         <template #actions>
           <v-btn
             color="primary"
-            depressed
+            variant="flat"
             :href="alert.href"
             v-if="alert.href"
           >
@@ -110,7 +108,7 @@
           </v-btn>
           <v-btn
             color="primary"
-            text
+            variant="text"
             @click="user.unalert(alert.id)"
           >
             Hide
@@ -120,16 +118,15 @@
       <v-progress-linear
               :active="user.working"
               :indeterminate="user.working"
-              fixed
               color="secondary"
               style="z-index: 3"
       ></v-progress-linear>
       <router-view/>
     </v-main>
     <v-footer
-      class="d-flex flex-column align-stretch pa-0 white--text text--darken-1 elevation-12"
+      class="d-flex flex-column align-stretch pa-0 text-white-darken-1 elevation-12"
     >
-      <div class="grey darken-3 d-sm-flex flex-row justify-space-between pa-4">
+      <div class="bg-grey-darken-3 d-sm-flex flex-row justify-space-between pa-4">
         <div class="pa-2">
           <b>deSEC e.V.</b>
         </div>
@@ -141,7 +138,7 @@
           <div class="px-2"><router-link :to="{name: 'impressum'}">Legal Notice (Impressum)</router-link></div>
         </div>
       </div>
-      <div class="grey darken-4 d-md-flex flex-row justify-space-between pa-6">
+      <div class="bg-grey-darken-4 d-md-flex flex-row justify-space-between pa-6">
         <div>
           <p>{{ email }}</p>
           <p>
@@ -153,7 +150,7 @@
         <div>
           <p>
             Please <router-link :to="{name: 'donate'}">donate</router-link>!
-            <v-icon color="red" class="text--darken-2" dense>{{ mdiHeart }}</v-icon>
+            <v-icon color="red" >{{ mdiHeart }}</v-icon>
           </p>
           <p>
             European Bank Account:<br>
@@ -167,7 +164,7 @@
         </div>
         <div>
           <p>Vorstand</p>
-          <p class="white--text text--darken-2">
+          <p class="text-white-darken-2">
             Nils Wisiol<br/>
             Peter Thomassen<br/>
             Wolfgang Studier<br/>

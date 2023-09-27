@@ -30,7 +30,7 @@
               <v-text-field
                 v-model="email"
                 label="Email"
-                outlined
+                variant="outlined"
                 required
                 :rules="email_rules"
                 :error-messages="email_errors"
@@ -42,7 +42,7 @@
                 label="Password"
                 :append-icon="hide_password ? 'mdi-eye' : 'mdi-eye-off'"
                 :type="hide_password ? 'password' : 'text'"
-                outlined
+                variant="outlined"
                 required
                 :rules="password_rules"
                 tabindex="2"
@@ -61,7 +61,7 @@
               <v-btn
                 type="submit"
                 color="primary"
-                depressed
+                variant="flat"
                 :disabled="!valid"
                 :loading="working"
                 tabindex="4"
@@ -70,7 +70,7 @@
               </v-btn>
               <v-btn
                 id="forgotPassword"
-                text
+                variant="text"
                 color="primary"
                 :to="{name: 'reset-password', params: email ? {email: email} : {}}"
                 tabindex="5"

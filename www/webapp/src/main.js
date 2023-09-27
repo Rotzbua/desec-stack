@@ -13,10 +13,17 @@ import {createVuetify} from "vuetify";
 // import {components, directives} from "vuetify/dist/vuetify";
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
+import {  mdi } from 'vuetify/iconsets/mdi-svg'
 
 const vuetify = createVuetify({
     components,
     directives,
+    icons: {
+        defaultSet: 'mdi',
+        sets: {
+            mdi,
+        },
+    }
     // icons: {
     //     iconfont: 'mdiSvg', // 'mdi' || 'mdiSvg' || 'md' || 'fa' || 'fa4' || 'faSvg'
     // },

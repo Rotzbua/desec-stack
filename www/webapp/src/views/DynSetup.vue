@@ -49,7 +49,7 @@
                     router or any other dynamic DNS client in your network with the following parameters:
                   </p>
 
-                  <v-simple-table>
+                  <v-table>
                     <tbody>
                     <tr>
                       <td>URL</td>
@@ -64,7 +64,7 @@
                       <td class="fixed-width">{{ token }}</td>
                     </tr>
                     </tbody>
-                  </v-simple-table>
+                  </v-table>
 
                   <p>
                     Please only update your IP address when it has changed. If your client is
@@ -110,7 +110,7 @@
                 Please verify that your client is using the credentials provided by deSEC and then come back to check
                 again.
               </p>
-              <v-btn depressed outlined block @click="check" :loading="working">Check Again</v-btn>
+              <v-btn variant="outlined" block @click="check" :loading="working">Check Again</v-btn>
             </v-alert>
             <v-alert type="success" v-if="ips !== undefined && ips.length > 0">
               <p>
@@ -129,7 +129,7 @@
                 Enjoy!
               </p>
               <p>
-                <v-btn depressed outlined block @click="check" :loading="working">Update</v-btn>
+                <v-btn variant="outlined" block @click="check" :loading="working">Update</v-btn>
               </p>
               <p>
                 Please note that deSEC only assigns your IP address to your domain name.
@@ -144,7 +144,7 @@
                 for dynamic DNS only, but enables to you add more domains and other DNS information.
                 You can also assign a password later at any time.
               </p>
-              <v-btn outlined block :to="{name: 'reset-password'}">
+              <v-btn variant="outlined" block :to="{name: 'reset-password'}">
                 Assign Account Password
               </v-btn>
             </div>
@@ -155,7 +155,7 @@
               If you like our service, please consider donating.
             </p>
             <p>
-              <v-btn block outlined :to="{name: 'donate'}">Donate</v-btn>
+              <v-btn block variant="outlined" :to="{name: 'donate'}">Donate</v-btn>
             </p>
           </v-card-text>
           <v-card-actions>

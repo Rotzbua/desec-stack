@@ -1,6 +1,5 @@
 <template>
-  <div>
-  <v-card outline tile class="pa-md-12 pa-8 elevation-4" style="overflow: hidden">
+  <v-card outline rounded="0" class="pa-md-12 pa-8 elevation-4" style="overflow: hidden">
     <div class="d-none d-md-block triangle-bg"></div>
     <v-container class="pa-0">
       <v-row align="center">
@@ -16,37 +15,36 @@
             </p>
           </h3>
           <div class="pa-2">
-            <v-form @submit.prevent="signup" :value="valid" ref="form">
+            <v-form @submit.prevent="signup" :model-value="valid" ref="form">
               <v-row>
                 <v-col md="9" cols="12">
-                  <div class="d-flex align-center flex-column">
+<!--                  <div class="d-flex align-center flex-column">-->
                     <v-radio-group
                             v-model="domainType"
                             class="pb-2"
                             hide-details
-                            row
-                            @change="$router.push({query: {domainType: domainType}})"
+                            inline
+                            @update:model-value="$router.push({query: {domainType: domainType}})"
                     >
                       <v-radio class="pb-2" label="Managed DNS account" value="custom"></v-radio>
                       <v-radio class="pb-2" label="dynDNS account" value="dynDNS"></v-radio>
                     </v-radio-group>
-                  </div>
+<!--                  </div>-->
                   <v-text-field
-                    outlined
-                    solo
+                    variant="outlined"
                     flat
                     v-model="email"
                     :prepend-inner-icon="mdiEmail"
                     type="email"
                     placeholder="Account Email Address"
                     :rules="email_rules"
-                    validate-on-blur
+                    validate-on="blur"
                     ></v-text-field>
                   <v-btn
                     color="primary"
                     type="submit"
-                    depressed
-                    x-large
+                    variant="flat"
+                    size="x-large"
                     block
                   >
                     Create Account
@@ -63,14 +61,14 @@
     <v-container>
       <v-row justify="center" class="py-8">
         <v-col class="col-12 col-sm-4 text-center" v-for="f in features" :key="f.title">
-          <v-icon x-large>{{ f.icon }}</v-icon>
-          <h1 class="grey--text text--darken-2"><span>{{ f.title }}</span></h1>
+          <v-icon size="x-large">{{ f.icon }}</v-icon>
+          <h1 class="text-grey-darken-2"><span>{{ f.title }}</span></h1>
           <p v-html="f.text"></p>
         </v-col>
       </v-row>
     </v-container>
   </v-container>
-  <v-container fluid class="grey lighten-4">
+  <v-container fluid class="bg-grey-lighten-4">
     <v-container class="py-8">
       <v-row align="center">
         <v-col class="text-center">
@@ -84,7 +82,7 @@
           </v-layout>
         </v-col>
         <v-col class="col-12 col-sm-10 col-lg-9 py-4 text-center">
-          <a class="primary--text text--darken-2" href="https://securesystems.de/">SSE</a> supports us with staff for
+          <a class="text-primary-darken-2" href="https://securesystems.de/">SSE</a> supports us with staff for
           software development and our standardization activities within the IETF and ICANN.
           We trust them because creating and auditing security solutions is their daily business.
         </v-col>
@@ -96,7 +94,7 @@
           </v-layout>
         </v-col>
         <v-col class="col-12 col-sm-10 col-lg-9 py-4 text-center">
-          deSEC receives funding through <a class="primary--text text--darken-2" href="https://nlnet.nl/">NLnet
+          deSEC receives funding through <a class="text-primary-darken-2" href="https://nlnet.nl/">NLnet
           Foundation</a> for its work on the automation and future viability of DNSSEC. The <strong>NGI Assure</strong>
           fund, established with financial support from the European Commission's <strong>Next Generation
           Internet</strong> programme, is dedicated to technologies providing strong assurances about the Internet's
@@ -110,7 +108,7 @@
           </v-layout>
         </v-col>
         <v-col class="col-12 col-sm-10 col-lg-9 py-4 text-center">
-          Through their Community Projects Fund, <a class="primary--text text--darken-2" href="https://ripe.net/">RIPE NCC</a>
+          Through their Community Projects Fund, <a class="text-primary-darken-2" href="https://ripe.net/">RIPE NCC</a>
           supports the ongoing operation of our DNS platform and covers global Anycast network expenses in
           particular. We greatly appreciate their support.
         </v-col>
@@ -132,18 +130,18 @@
       </v-row>
     </v-container>
   </v-container>
-  <v-container fluid class="grey lighten-4">
+  <v-container fluid class="bg-grey-lighten-4">
     <v-container>
       <v-row align="center" justify="center">
         <v-card
           class="mx-auto col-12"
-          color="grey lighten-5"
+          color="grey-lighten-5"
         >
           <v-card-text
                   class="pt-6"
                   style="position: relative;"
           >
-            <h3 class="text-h4 mb-2 text--darken-2 grey--text text-center">
+            <h3 class="text-h4 mb-2 text-grey-darken-2 text-center">
               deSEC Global Anycast Networks
             </h3>
             <div class="font-weight-light text-h6 mb-2">
@@ -160,7 +158,7 @@
             class="justify-center"
             style="display: block; width: 100%; aspect-ratio: 2/1"
           >
-            <v-tooltip bottom v-for="f in frontends" :key="f.host">
+            <v-tooltip location="bottom" v-for="f in frontends" :key="f.host">
               <template #activator="{ on }">
                 <v-img
                   v-on="on"
@@ -181,7 +179,6 @@
       </v-row>
     </v-container>
   </v-container>
-  </div>
 </template>
 
 <style scoped>

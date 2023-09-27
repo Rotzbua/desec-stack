@@ -3,17 +3,17 @@
     :label="label"
     :disabled="disabled || readonly"
     :error-messages="errorMessages"
-    :value="value"
+    :model-value="value"
     :type="type || ''"
     :placeholder="required ? '' : '(optional)'"
     :hint="hint"
     persistent-hint
     :required="required"
     :rules="[v => !required || !!v || 'Required.'].concat(rules)"
-    @input="changed('input', $event)"
-    @input.native="$emit('dirty', $event)"
+    @update:model-value="changed('input', $event)"
+    @update:model-value.native="$emit('dirty', $event)"
     @keyup="changed('keyup', $event)"
-    dense
+    density="compact"
     rows="8"
   />
 </template>

@@ -19,7 +19,7 @@
         :style="{ width: fieldWidth(index) }"
         :append-icon="index == fields.length-1 && !readonly && !disabled ? appendIcon : ''"
         @click:append="$emit('remove', $event)"
-        @input="inputHandler()"
+        @update:model-value="inputHandler()"
         @paste.prevent="pasteHandler($event)"
         @keydown="keydownHandler(index, $event)"
         @keyup="(e) => $emit('keyup', e)"

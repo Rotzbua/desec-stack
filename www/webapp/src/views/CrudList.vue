@@ -57,9 +57,9 @@
                         id="create"
                         color="primary"
                         dark
-                        small
+                        size="small"
                         fab
-                        depressed
+                        variant="flat"
                         :disabled="user.working"
                 >
                   <v-icon>{{ mdiPlus }}</v-icon>
@@ -137,7 +137,7 @@
                               v-if="Object.keys(writeableAdvancedColumns).length > 0"
                           >
                             <v-expansion-panel>
-                              <v-expansion-panel-header class="primary lighten-5">
+                              <v-expansion-panel-header class="bg-primary-lighten-5">
                                 <span>Advanced settings</span>
                               </v-expansion-panel-header>
                               <v-expansion-panel-content>
@@ -166,7 +166,7 @@
                         <v-btn
                                 color="primary"
                                 class="grow"
-                                :outlined="!createDialogSuccess"
+                                :variant="!createDialogSuccess && 'outlined'"
                                 :disabled="createDialogWorking"
                                 @click.native="close"
                         >
@@ -176,7 +176,7 @@
                                 type="submit"
                                 color="primary"
                                 class="grow"
-                                depressed
+                                variant="flat"
                                 :disabled="createInhibited || !valid || createDialogWorking || createDialogSuccess"
                                 :loading="createDialogWorking"
                                 v-if="!createDialogSuccess"
@@ -216,7 +216,7 @@
                 <div :key="key" v-for="[key, action] in getActions(actions)">
                   <v-tooltip
                       :disabled="!action.tooltip"
-                      top
+                      location="top"
                       transition="fade-transition"
                   >
                     <template #activator="{ on, attrs }">
@@ -310,7 +310,7 @@
                   <v-btn
                     color="primary"
                     class="grow"
-                    outlined
+                    variant="outlined"
                     :disabled="destroyDialogWorking"
                     @click.native="destroyClose"
                   >
@@ -319,7 +319,7 @@
                   <v-btn
                     color="primary"
                     class="grow"
-                    depressed
+                    variant="flat"
                     type="submit"
                     :loading="destroyDialogWorking"
                   >

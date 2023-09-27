@@ -14,7 +14,7 @@
         To ensure a smooth transition when moving your domain to deSEC, setup a password for your deSEC account,
         log in and configure the DNS for <span class="fixed-width">{{ domain }}</span>, before you proceed below.
       </p>
-      <v-btn outlined block :to="{name: 'reset-password'}" target="_blank">
+      <v-btn variant="outlined" block :to="{name: 'reset-password'}" target="_blank">
         Assign Account Password
       </v-btn>
     </div>
@@ -29,7 +29,7 @@
       <strong>{{ domain }}</strong> (usually your provider or technical administrator):
     </p>
     <v-card>
-      <v-tabs v-model="tab1" background-color="transparent" grow>
+      <v-tabs v-model="tab1" bg-color="transparent" grow>
         <v-tab href="#ns">Nameservers</v-tab>
       </v-tabs>
 
@@ -40,8 +40,7 @@
             <v-card-actions>
               <v-btn
                   @click="copyToClipboard(ns.join('\n'))"
-                  outlined
-                  text
+                  variant="outlined"
               >
                 <v-icon>{{ mdiContentCopy }}</v-icon>
                 copy to clipboard
@@ -73,7 +72,7 @@
     <v-card>
       <v-tabs
           v-model="tab2"
-          background-color="transparent"
+          bg-color="transparent"
           grow
       >
         <v-tab v-for="t in tabs" :key="t.key" :href="'#' + t.key">{{ t.title }}</v-tab>
@@ -87,8 +86,7 @@
             <v-card-actions>
               <v-btn
                   @click="copyToClipboard(t.data)"
-                  outlined
-                  text
+                  variant="outlined"
               >
                 <v-icon>{{ mdiContentCopy }}</v-icon>
                 copy to clipboard
@@ -122,7 +120,7 @@
       <template #action="{ attrs }">
         <v-btn
             color="pink"
-            text
+            variant="text"
             v-bind="attrs"
             @click="snackbar = false"
         >

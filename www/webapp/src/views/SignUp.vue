@@ -33,12 +33,12 @@
                       v-model="email"
                       label="Email"
                       prepend-icon="mdi-email"
-                      outlined
+                      variant="outlined"
                       required
                       :rules="email_rules"
                       :error-messages="email_errors"
                       @change="email_errors=[]"
-                      validate-on-blur
+                      validate-on="blur"
                       ref="emailField"
                       tabindex="1"
               />
@@ -59,7 +59,7 @@
                       v-model="domain"
                       :label="domainType === 'dynDNS' ? 'DynDNS domain' : 'Domain name'"
                       prepend-icon="mdi-blank"
-                      outlined
+                      variant="outlined"
                       required
                       :disabled="domainType === 'none' || domainType === undefined"
                       :rules="domainType === 'dynDNS' ? dyn_domain_rules : (domainType === 'custom' ? domain_rules : [])"
@@ -83,7 +83,7 @@
                         v-model="captchaSolution"
                         label="Type CAPTCHA text here"
                         prepend-icon="mdi-account-check"
-                        outlined
+                        variant="outlined"
                         required
                         :rules="captcha_rules"
                         :error-messages="captcha_errors"
@@ -112,12 +112,12 @@
                     </audio>
                     <br/>
                     <v-btn-toggle>
-                      <v-btn text outlined @click="getCaptcha(true)" :disabled="captchaWorking"><v-icon>mdi-refresh</v-icon></v-btn>
+                      <v-btn variant="outlined" @click="getCaptcha(true)" :disabled="captchaWorking"><v-icon>mdi-refresh</v-icon></v-btn>
                     </v-btn-toggle>
                     &nbsp;
                     <v-btn-toggle v-model="captcha_kind">
-                      <v-btn text outlined value="image" aria-label="Switch to Image CAPTCHA" :disabled="captchaWorking"><v-icon>mdi-eye</v-icon></v-btn>
-                      <v-btn text outlined value="audio" aria-label="Switch to Audio CAPTCHA" :disabled="captchaWorking"><v-icon>mdi-ear-hearing</v-icon></v-btn>
+                      <v-btn variant="outlined" value="image" aria-label="Switch to Image CAPTCHA" :disabled="captchaWorking"><v-icon>mdi-eye</v-icon></v-btn>
+                      <v-btn variant="outlined" value="audio" aria-label="Switch to Audio CAPTCHA" :disabled="captchaWorking"><v-icon>mdi-ear-hearing</v-icon></v-btn>
                     </v-btn-toggle>
                   </v-col>
                 </v-row>
@@ -157,7 +157,7 @@
             </v-card-text>
             <v-card-actions class="justify-center">
               <v-btn
-                      depressed
+                      variant="flat"
                       class="px-4"
                       color="primary"
                       type="submit"

@@ -37,16 +37,16 @@
                                     v-model="email"
                                     label="Current Email"
                                     prepend-icon="mdi-blank"
-                                    outlined
+                                    variant="outlined"
                                     required
                                     :disabled="true"
-                                    validate-on-blur
+                                    validate-on="blur"
                             />
                             <v-text-field
                                     v-model="password"
                                     :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
                                     prepend-icon="mdi-blank"
-                                    outlined
+                                    variant="outlined"
                                     label="Password"
                                     required
                                     :rules="[rules.required]"
@@ -60,7 +60,7 @@
                         </v-card-text>
                         <v-card-actions class="justify-center">
                             <v-btn
-                                    depressed
+                                    variant="flat"
                                     color="primary"
                                     type="submit"
                                     :loading="working"

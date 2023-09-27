@@ -65,7 +65,7 @@
             <v-row dense align="center" class="justify-center">
               <v-col cols="auto">
                 <v-btn
-                        depressed
+                        variant="flat"
                         color="primary"
                         type="submit"
                         :disabled="working || code.length != 6"

@@ -28,7 +28,7 @@
             the answer there.
           </v-card-text>
           <v-card-actions>
-            <v-btn block outlined :to="{name: 'talk'}">Find Help</v-btn>
+            <v-btn block variant="outlined" :to="{name: 'talk'}">Find Help</v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -40,7 +40,7 @@
             If you like our service, please consider donating.
           </v-card-text>
           <v-card-actions>
-            <v-btn block outlined :to="{name: 'donate'}">Donate</v-btn>
+            <v-btn block variant="outlined" :to="{name: 'donate'}">Donate</v-btn>
           </v-card-actions>
         </v-card>
       </v-col>

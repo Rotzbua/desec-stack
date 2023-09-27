@@ -1,6 +1,6 @@
 <template>
   <div>
-  <v-card outline tile class="pa-md-12 pa-8 elevation-4" style="overflow: hidden">
+  <v-card outline rounded="0" class="pa-md-12 pa-8 elevation-4" style="overflow: hidden">
     <div class="d-none d-md-block triangle-bg">§§</div>
     <v-container class="pa-0">
       <v-row align="center">
@@ -21,7 +21,7 @@
       </v-row>
     </v-container>
   </v-card>
-  <v-container fluid class="grey lighten-4">
+  <v-container fluid class="bg-grey-lighten-4">
     <v-container>
       <v-row class="pt-8">
         <v-col class="text-center">

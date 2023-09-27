@@ -39,7 +39,7 @@
                   <p>
                     We're happy to accept donations via bank transfer. Please use the following account details:
                   </p>
-                  <v-simple-table>
+                  <v-table>
                     <tbody>
                     <tr>
                       <td>Recipient</td>
@@ -54,7 +54,7 @@
                       <td>GENODEF1SLR</td>
                     </tr>
                     </tbody>
-                  </v-simple-table>
+                  </v-table>
                   <div class="text-center">
                     <qrcode-vue :value="bank_transfer_epc" size="300"/>
                   </div>
