@@ -15,6 +15,8 @@ module.exports = {
     'plugin:vue/essential',
     // 'plugin:vue/strongly-recommended',
     // 'plugin:vue/recommended',
+    'plugin:vue-scoped-css/recommended', // vue2
+    // 'plugin:vue-scoped-css/vue3-recommended',
     'plugin:vuetify/base',
     'plugin:import/recommended',
     'eslint:recommended',
