@@ -53,52 +53,12 @@
                                     tabindex="1"
                             />
 
-                              <v-container class="pa-0">
-                                <v-row dense align="center" class="text-center">
-                                  <v-col cols="12" sm="">
-                                    <v-text-field
-                                            v-model="captchaSolution"
-                                            label="Type CAPTCHA text here"
-                                            prepend-icon="mdi-account-check"
-                                            outlined
-                                            required
-                                            :rules="captcha_rules"
-                                            :error-messages="captcha_errors"
-                                            @change="captcha_errors=[]"
-                                            @keypress="captcha_errors=[]"
-                                            class="uppercase"
-                                            ref="captchaField"
-                                            tabindex="3"
-                                            :hint="captcha_kind === 'image' ? 'Can\'t see? Hear an audio CAPTCHA instead.' : 'Trouble hearing? Switch to an image CAPTCHA.'"
-                                    />
-                                  </v-col>
-                                  <v-col cols="12" sm="auto">
-                                    <v-progress-circular
-                                          indeterminate
-                                          v-if="captchaWorking"
-                                    ></v-progress-circular>
-                                    <img
-                                          v-if="captcha && !captchaWorking && captcha_kind === 'image'"
-                                          :src="'data:image/png;base64,'+captcha.challenge"
-                                          alt="Passwords can also be reset by sending an email to our support."
-                                    />
-                                    <audio controls
-                                          v-if="captcha && !captchaWorking && captcha_kind === 'audio'"
-                                    >
-                                      <source :src="'data:audio/wav;base64,'+captcha.challenge" type="audio/wav"/>
-                                    </audio>
-                                    <br/>
-                                    <v-btn-toggle>
-                                      <v-btn text outlined @click="getCaptcha(true)" :disabled="captchaWorking"><v-icon>mdi-refresh</v-icon></v-btn>
-                                    </v-btn-toggle>
-                                    &nbsp;
-                                    <v-btn-toggle v-model="captcha_kind">
-                                      <v-btn text outlined value="image" aria-label="Switch to Image CAPTCHA" :disabled="captchaWorking"><v-icon>mdi-eye</v-icon></v-btn>
-                                      <v-btn text outlined value="audio" aria-label="Switch to Audio CAPTCHA" :disabled="captchaWorking"><v-icon>mdi-ear-hearing</v-icon></v-btn>
-                                    </v-btn-toggle>
-                                  </v-col>
-                                </v-row>
-                              </v-container>
+                            <generic-captcha
+                                :id="captchaID"
+                                :solution="captchaSolution"
+                                tabindex="3"
+                                ref="captchaField"
+                            />
                         </v-card-text>
                         <v-card-actions class="justify-center">
                             <v-btn
@@ -122,6 +82,7 @@
   import {email_pattern} from '@/validation';
   import {digestError} from '@/utils';
   import ErrorAlert from '@/components/ErrorAlert';
+  import GenericCaptcha from "@/components/Field/GenericCaptcha.vue";
 
   const HTTP = axios.create({
     baseURL: '/api/v1/',
@@ -131,15 +92,14 @@
   export default {
     name: 'ResetPassword',
     components: {
+      GenericCaptcha,
       ErrorAlert,
     },
     data: () => ({
       valid: false,
       working: false,
       done: false,
-      captchaWorking: true,
       errors: [],
-      captcha: null,
 
       /* email field */
       email: '',
@@ -147,31 +107,17 @@
       email_errors: [],
 
       /* captcha field */
+      captchaID: null,
       captchaSolution: '',
-      captcha_rules: [v => !!v || 'Please enter the text displayed in the picture so we are (somewhat) convinced you are human'],
       captcha_errors: [],
-      captcha_kind: 'image',
     }),
     async mounted() {
       if ('email' in this.$route.params && this.$route.params.email !== undefined) {
         this.email = this.$route.params.email;
       }
-      this.getCaptcha();
       this.initialFocus();
     },
     methods: {
-      async getCaptcha(focus = false) {
-        this.captchaWorking = true;
-        this.captchaSolution = "";
-        try {
-          this.captcha = (await HTTP.post('captcha/', {kind: this.captcha_kind})).data;
-          if(focus) {
-            this.$refs.captchaField.focus()
-          }
-        } finally {
-          this.captchaWorking = false;
-        }
-      },
       async initialFocus() {
         return this.$refs.emailField.focus();
       },
@@ -185,31 +131,24 @@
           await HTTP.post('auth/account/reset-password/', {
             email: this.email,
             captcha: {
-              id: this.captcha.id,
+              id: this.captchaID,
               solution: this.captchaSolution,
             },
           });
           this.done = true;
         } catch (ex) {
-          this.getCaptcha(true);
+          await this.$refs.captchaField.getCaptcha(true);
           let errors = await digestError(ex);
           for (const c in errors) {
             if (c === 'captcha') {
-              this.captcha_errors.push(...(errors[c]['non_field_errors'] ?? []));
-              this.captcha_errors.push(...(errors[c]['solution'] ?? []));
+              this.$refs.captchaField.addError(...(errors[c]['non_field_errors'] ?? []));
+              this.$refs.captchaField.addError(...(errors[c]['solution'] ?? []));
             } else {
               this.errors.push(...errors[c]);
             }
           }
         }
         this.working = false;
-      },
-    },
-    watch: {
-      captcha_kind: function (oldKind, newKind) {
-        if (oldKind !== newKind) {
-          this.getCaptcha();
-        }
       },
     },
   };
