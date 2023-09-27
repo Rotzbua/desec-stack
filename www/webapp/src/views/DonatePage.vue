@@ -208,9 +208,3 @@
     },
   }
 </script>
-
-<style lang="scss" scoped>
-  .fixed-width {
-    font-family: monospace;
-  }
-</style>
