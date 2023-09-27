@@ -1,9 +1,7 @@
 <script>
-import { integer, between } from '@vuelidate/validators';
+import { integer } from '@vuelidate/validators';
 import RecordItem from './RecordItem.vue';
-
-const MAX8 = 255;
-const int8 = between(0, MAX8);
+import {int8, MAX8} from "@/validation";
 
 // https://www.iana.org/assignments/pkix-parameters/pkix-parameters.xhtml#caa-properties
 const tags = ['issue', 'issuewild', 'iodef', 'contactemail', 'contactphone'];

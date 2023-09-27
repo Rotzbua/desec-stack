@@ -3,7 +3,6 @@ import App from '@/App.vue'
 import router from '@/router'
 import vuetify from '@/plugins/vuetify'
 import VueRouter from 'vue-router'
-import Vuelidate from 'vuelidate'
 import "@fontsource/roboto/300.css" /* light */
 import "@fontsource/roboto/400.css" /* regular */
 import "@fontsource/roboto/400-italic.css" /* regular-italic */
@@ -14,7 +13,6 @@ import {createPinia, PiniaVuePlugin} from "pinia";
 import { useVuelidate } from '@vuelidate/core'
 
 Vue.config.productionTip = false
-Vue.use(Vuelidate)
 // `Pinia` replaces `vuex` as store.
 Vue.use(PiniaVuePlugin)
 const pinia = createPinia()

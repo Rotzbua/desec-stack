@@ -1,13 +1,7 @@
 <script>
-import { helpers, integer, between } from '@vuelidate/validators';
+import { integer } from '@vuelidate/validators';
 import RecordItem from './RecordItem.vue';
-
-// Allow for root label only, see RFC 2052
-const hostname = helpers.regex('hostname', /^((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))?[.]?$/);
-const trailingDot = helpers.regex('trailingDot', /[.]$/);
-
-const MAX16 = 65535;
-const int16 = between(0, MAX16);
+import {hostname3, int16, MAX16, trailingDot} from "@/validation";
 
 export default {
   name: 'RecordSRV',
@@ -17,7 +11,7 @@ export default {
       { label: 'Priority', validations: { integer, int16 } },
       { label: 'Weight', validations: { integer, int16 } },
       { label: 'Port', validations: { integer, int16 } },
-      { label: 'Target', validations: { hostname, trailingDot } },
+      { label: 'Target', validations: { hostname3, trailingDot } },
     ],
     errors: {
       integer: 'Please enter an integer.',

@@ -1,15 +1,7 @@
 <script>
-import { and, helpers, integer, between } from '@vuelidate/validators';
+import { integer } from '@vuelidate/validators';
 import RecordItem from './RecordItem.vue';
-
-const hex = helpers.regex('hex', /^([0-9a-fA-F]\s*)*[0-9a-fA-F]$/);
-const trim = and(helpers.regex('trimBegin', /^[^\s]/), helpers.regex('trimEnd', /[^\s]$/));
-
-const MAX8 = 255;
-const int8 = between(0, MAX8);
-
-const MAX16 = 65535;
-const int16 = between(0, MAX16);
+import {hex, int16, int8, MAX16, MAX8, trim} from "@/validation";
 
 export default {
   name: 'RecordDS',

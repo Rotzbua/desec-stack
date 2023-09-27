@@ -1,46 +1,65 @@
 <template>
   <v-layout class="flex">
     <div
-      v-for="(field, index) in fields"
-      :key="index"
-      :class="index == fields.length - 1 ? 'flex-grow-1' : ''"
+        v-for="(field, index) in fields"
+        :key="index"
+        :class="index === fields.length - 1 ? 'flex-grow-1' : ''"
     >
       <v-text-field
-        ref="input"
-        v-model="field.value"
-        :label="hideLabel ? '' : field.label"
-        :class="hideLabel ? 'pt-0' : ''"
-        :disabled="disabled"
-        :readonly="readonly"
-        :placeholder="required && !field.optional ? ' ' : '(optional)'"
-        :hide-details="!content.length || !($v.fields.$each[index].$invalid || $v.fields[index].$invalid)"
-        :error="$v.fields.$each[index].$invalid || $v.fields[index].$invalid"
-        :error-messages="fieldErrorMessages(index)"
-        :style="{ width: fieldWidth(index) }"
-        :append-icon="index == fields.length-1 && !readonly && !disabled ? appendIcon : ''"
-        @click:append="$emit('remove', $event)"
-        @input="inputHandler()"
-        @paste.prevent="pasteHandler($event)"
-        @keydown="keydownHandler(index, $event)"
-        @keyup="(e) => $emit('keyup', e)"
+          ref="input"
+          v-model="field.value"
+          :label="hideLabel ? '' : field.label"
+          :class="hideLabel ? 'pt-0' : ''"
+          :disabled="disabled"
+          :readonly="readonly"
+          :placeholder="required && !field.optional ? ' ' : '(optional)'"
+          :hide-details="!content.length "
+          :style="{ width: fieldWidth(index) }"
+          :append-icon="index === fields.length-1 && !readonly && !disabled ? appendIcon : ''"
+          @click:append="$emit('remove', $event)"
+          @input="inputHandler()"
+          @paste.prevent="pasteHandler($event)"
+          @keydown="keydownHandler(index, $event)"
+          @keyup="(e) => $emit('keyup', e)"
       />
+      <!--      <div-->
+      <!--          v-for="error in v$.fields.$each.$response.$errors[index].name"-->
+      <!--          :key="error"-->
+      <!--      >-->
+      <!--        {{ error }}-->
+      <!--        {{ error.$message }}-->
+      <!--      </div>-->
+      <!--      <div-->
+      <!--          v-for="error in v$.fields.$each.$response.$errors[index].name"-->
+      <!--          :key="error"-->
+      <!--      >-->
+      <!--        {{ error }}-->
+      <!--        {{ error.$message }}-->
+      <!--      </div>-->
+      <!--      :error-messages="fieldErrorMessages(index)"-->
+      <!--      :hide-details="!content.length || !($v.fields.$each[index].$invalid || $v.fields[index].$invalid)"-->
+      <!--      :error="$v.fields.$each[index].$invalid || $v.fields[index].$invalid"     -->
       <span
-        ref="mirror"
-        aria-hidden="true"
-        style="opacity: 0; position: absolute; width: auto; white-space: pre; z-index: -1"
+          ref="mirror"
+          aria-hidden="true"
+          style="opacity: 0; position: absolute; width: auto; white-space: pre; z-index: -1"
       />
       {{ errorMessages.join(' ') }}
     </div>
+    <button
+        @click="submitForm()"
+    >
+      test
+    </button>
   </v-layout>
 </template>
 
 <script>
-import { requiredUnless } from '@vuelidate/validators';
+import {useVuelidate} from "@vuelidate/core";
 
 export default {
   name: 'RecordItem',
-  components: {
-  },
+  components: {},
   props: {
     content: {
       type: String,
@@ -71,17 +90,22 @@ export default {
       required: false,
     },
   },
+  setup() {
+    return {
+      v$: useVuelidate(),
+    }
+  },
   data: () => ({
     errors: {
       required: ' ',
     },
     fields: [
-      { label: 'Value', validations: {} },
+      {label: 'Value', validations: {}},
     ],
     value: '',
   }),
   watch: {
-    content: function () {
+    content: function() {
       this.update(this.content);
     }
   },
@@ -94,35 +118,47 @@ export default {
     // Update internal and graphical representation
     this.update(this.content);
   },
-  validations() {
-    const validations = {
-      fields: {
-        $each: {
-          value: this.required ? { required: requiredUnless('optional') } : {},
-        },
-      },
-    };
-
-    validations.fields = this.fields.reduce(
-      (acc, field, index) => {
-        acc[index] = { value: field.validations };
-        return acc;
-      },
-      validations.fields,
-    );
-
-    return validations;
-  },
+  // validations() {
+  //   const validations = {
+  //
+  //     fields: {
+  //       $each: helpers.forEach({
+  //         // value: this.required ? { required: requiredUnless('optional') } : {},
+  //         value: {required, int16},
+  //         name: {required, int16},
+  //       }),
+  //     },
+  //   };
+  //
+  //   // validations.fields = this.fields.reduce(
+  //   //   (acc, field, index) => {
+  //   //     acc[index] = { value: field.validations };
+  //   //     return acc;
+  //   //   },
+  //   //   validations.fields,
+  //   // );
+  //   console.log("validations()")
+  //   console.log(validations)
+  //   return validations;
+  // },
   methods: {
-    fieldErrorMessages(index) {
+    debugOut() {
+      console.log(this.v$)
+    },
+    fieldErrorMessages(
+        index
+    ) {
+      console.log("11111111111")
       const fieldValidationStatus = (fields, index) => Object.keys(fields[index].value.$params).map(
-        name => ({ passed: fields[index].value[name], message: this.errors[name] }),
+          name => ({passed: fields[index].value[name], message: this.errors[name]}),
       );
+      console.log("222222222")
 
       const validationStatus = [
-        ...fieldValidationStatus(this.$v.fields, index),
-        ...fieldValidationStatus(this.$v.fields.$each, index),
+        ...fieldValidationStatus(this.v$.fields, index),
+        // ...fieldValidationStatus(this.v$.fields.$each, index),
       ];
+      console.log("33333")
 
       return validationStatus.filter(val => !val.passed).map(val => val.message || 'Invalid input.');
     },
@@ -130,7 +166,7 @@ export default {
       let ret = 'auto';
       const inputs = this.$refs.input;
       const mirrors = this.$refs.mirror;
-      if (index < this.fields.length - 1 && inputs && mirrors) {
+      if(index < this.fields.length - 1 && inputs && mirrors) {
         const mirror = mirrors[index];
         while (mirror.childNodes.length) {
           mirror.removeChild(mirror.childNodes[0]);
@@ -175,13 +211,13 @@ export default {
       const n = (trimmed.match(/ /g) || []).length;
       const diff = Math.max(0, (this.fields.length - 1) - n);
       trimmed += ' '.repeat(diff);
-      if (caretPosition < trimmed.length) {
+      if(caretPosition < trimmed.length) {
         value = trimmed;
       }
 
       // Only emit update event if there's news
       const dirty = (value !== this.value);
-      if (dirty) {
+      if(dirty) {
         this.value = value;
         this.$emit('update:content', this.value);
       }
@@ -190,7 +226,7 @@ export default {
       // This case does not change the record value, but the field representation needs an update
       this.updateFields();
 
-      if (caretPosition !== undefined) {
+      if(caretPosition !== undefined) {
         await this.setPosition(caretPosition);
       }
     },
@@ -200,7 +236,7 @@ export default {
     },
     positionBeforeDelimiter(index) {
       return index < this.fields.length - 1
-        && this.$refs.input[index].$refs.input.selectionStart === this.fields[index].value.length;
+          && this.$refs.input[index].$refs.input.selectionStart === this.fields[index].value.length;
     },
     keydownHandler(index, event) {
       switch (event.key) {
@@ -228,20 +264,20 @@ export default {
       }
     },
     spaceHandler(index, event) {
-      if (!this.positionBeforeDelimiter(index)) {
+      if(!this.positionBeforeDelimiter(index)) {
         return;
       }
 
       const length = this.fields.slice(index + 1)
-        .map(field => field.value.length)
-        .reduce((acc, curr) => acc + curr, 0);
+          .map(field => field.value.length)
+          .reduce((acc, curr) => acc + curr, 0);
 
-      if (length === 0 || this.fields[this.fields.length - 1].value.length > 0) {
+      if(length === 0 || this.fields[this.fields.length - 1].value.length > 0) {
         return this.rightHandler(index, event);
       }
     },
     backspaceHandler(index, event) {
-      if (!this.positionAfterDelimiter(index)) {
+      if(!this.positionAfterDelimiter(index)) {
         return;
       }
 
@@ -250,7 +286,7 @@ export default {
       this.update(this.value.slice(0, pos - 1) + this.value.slice(pos), pos - 1);
     },
     deleteHandler(index, event) {
-      if (!this.positionBeforeDelimiter(index)) {
+      if(!this.positionBeforeDelimiter(index)) {
         return;
       }
 
@@ -259,7 +295,7 @@ export default {
       this.update(this.value.slice(0, pos) + this.value.slice(pos + 1), pos);
     },
     leftHandler(index, event) {
-      if (!this.positionAfterDelimiter(index)) {
+      if(!this.positionAfterDelimiter(index)) {
         return;
       }
 
@@ -267,7 +303,7 @@ export default {
       this.setPosition(this.getPosition() - 1);
     },
     rightHandler(index, event) {
-      if (!this.positionBeforeDelimiter(index)) {
+      if(!this.positionBeforeDelimiter(index)) {
         return;
       }
 
@@ -299,7 +335,7 @@ export default {
 
       // Insert clipboard text and remove up to n spaces form the right
       value = value.slice(0, pos) + clipboardData + value.slice(pos);
-      value = value.replace(new RegExp(` {0,${n}}$`,'g'), '');
+      value = value.replace(new RegExp(` {0,${n}}$`, 'g'), '');
       this.update(value, pos + clipboardData.length);
     },
     async setPosition(pos) {
@@ -317,7 +353,7 @@ export default {
       let caretPosition;
       const refs = this.$refs.input;
       const dirty = refs.findIndex(ref => ref.$refs.input === document.activeElement);
-      if (dirty >= 0) {
+      if(dirty >= 0) {
         caretPosition = refs[dirty].$refs.input.selectionStart;
         for (let i = 0; i < dirty; i++) {
           caretPosition += refs[i].$refs.input.value.length + 1;
@@ -335,6 +371,21 @@ export default {
         this.$set(this.fields[i], 'value', values[i] || '');
       });
     },
+    submitForm() {
+      this.v$.$validate() // checks all inputs
+      console.log(this.v$)
+      this.v$.$errors.forEach(
+          (e) => console.log(e.$message)
+      )
+      if(!this.v$.$error) {
+        // if ANY fail validation
+        alert('Form successfully submitted.')
+      } else {
+        alert('Form failed validation')
+      }
+      return false
+    },
+
   },
 };
 </script>

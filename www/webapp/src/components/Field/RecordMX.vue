@@ -1,12 +1,8 @@
 <script>
-import { helpers, integer, between } from '@vuelidate/validators';
+import { integer } from '@vuelidate/validators';
 import RecordItem from './RecordItem.vue';
+import {hostname1, int16, MAX16, trailingDot} from "@/validation";
 
-const hostname = helpers.regex('hostname', /^((([a-zA-Z0-9-]+\.?)+)|\.)$/);
-const trailingDot = helpers.regex('trailingDot', /[.]$/);
-
-const MAX16 = 65535;
-const int16 = between(0, MAX16);
 
 export default {
   name: 'RecordMX',
@@ -19,7 +15,7 @@ export default {
       },
       {
         label: 'Hostname',
-        validations: { hostname, trailingDot },
+        validations: { hostname1, trailingDot },
       },
     ],
     errors: {

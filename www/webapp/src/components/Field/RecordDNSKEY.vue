@@ -1,14 +1,7 @@
 <script>
-import { helpers, integer, between } from '@vuelidate/validators';
+import { integer } from '@vuelidate/validators';
 import RecordItem from './RecordItem.vue';
-
-const base64 = helpers.regex('base64', /^[0-9a-zA-Z+/][0-9a-zA-Z+/\s]*(=\s*){0,3}$/);
-
-const MAX8 = 255;
-const int8 = between(0, MAX8);
-
-const MAX16 = 65535;
-const int16 = between(0, MAX16);
+import {base64, int16, int8, MAX16, MAX8} from "@/validation";
 
 const equals3 = (value) => !value || value == 3;
 

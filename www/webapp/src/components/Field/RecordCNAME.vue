@@ -1,9 +1,6 @@
 <script>
-import { helpers } from '@vuelidate/validators';
 import RecordItem from './RecordItem.vue';
-
-const hostname = helpers.regex('hostname', /^((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z0-9_-]+\.)+[a-zA-Z]{2,}))[.]?$/);
-const trailingDot = helpers.regex('trailingDot', /[.]$/);
+import {hostname2, trailingDot} from "@/validation";
 
 export default {
   name: 'RecordCNAME',
@@ -14,7 +11,7 @@ export default {
       trailingDot: 'Hostname must end with a dot.',
     },
     fields: [
-      { label: 'Target hostname', validations: { hostname, trailingDot } },
+      { label: 'Target hostname', validations: { hostname2, trailingDot } },
     ],
   }),
 };

@@ -1,8 +1,6 @@
 <script>
-import { helpers } from '@vuelidate/validators';
 import RecordItem from './RecordItem.vue';
-
-const txtToken = helpers.regex('txtToken', /^".*"$/);
+import {txtToken} from "@/validation";
 
 export default {
   name: 'RecordTXT',

@@ -1,9 +1,6 @@
 <script>
-import { helpers } from '@vuelidate/validators';
 import RecordItem from './RecordItem.vue';
-
-const hostname = helpers.regex('hostname', /^((([a-zA-Z0-9-]+\.?)+)|\.)$/);
-const trailingDot = helpers.regex('trailingDot', /[.]$/);
+import {hostname1, trailingDot} from "@/validation";
 
 export default {
   name: 'RecordNS',
@@ -12,7 +9,7 @@ export default {
     fields: [
       {
         label: 'Hostname',
-        validations: { hostname, trailingDot },
+        validations: { hostname1, trailingDot },
       },
     ],
     errors: {
