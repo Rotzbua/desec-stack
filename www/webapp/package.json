@@ -28,10 +28,12 @@
     "eslint-import-resolver-alias": "^1.1.2",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-vue": "^9.15.1",
+    "eslint-plugin-vue-scoped-css": "^2.5.0",
     "eslint-plugin-vuetify": "^1.1.0",
     "sass": "~1.67.0",
     "unplugin-vue-components": "^0.25.1",
     "vite": "^4.4.5",
+    "vue-eslint-parser": "^9.3.1",
     "vuetify-loader": "~1.9.1"
   }
 }
