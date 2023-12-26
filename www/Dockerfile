@@ -24,6 +24,7 @@ COPY webapp/ /usr/src/app/
 RUN npm run build -- --emptyOutDir false
 
 
+#FROM nginx-brotli
 FROM nginx:mainline-alpine
 
 # Add dependencies for our scripts
