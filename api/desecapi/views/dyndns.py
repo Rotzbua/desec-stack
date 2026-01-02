@@ -76,53 +76,18 @@ class DynDNS12UpdateView(generics.GenericAPIView):
         as a fallback.
 
         Returns:
-            UpdateAction: A dataclass instance (`SetIPs`, `UpdateWithSubnet`, or `PreserveIPs`)
-            representing the action to be taken.
+            UpdateAction: A dataclass instance representing the action to be taken.
         """
         # Check URL parameters
         for param_key in param_keys:
             try:
-                params = set(
-                    filter(
-                        lambda param: separator in param or param in ("", "preserve"),
-                        map(str.strip, self.request.query_params[param_key].split(",")),
-                    )
-                )
+                param_value = self.request.query_params[param_key]
             except KeyError:
                 continue
-            if not params:
-                continue
 
-            try:
-                (param,) = params  # unpacks if params has exactly one element
-            except ValueError:  # more than one element
-                if params & {"", "preserve"}:
-                    raise ValidationError(
-                        detail=f'IP parameter "{param_key}" cannot have addresses and "preserve" or an empty value at the same time.',
-                        code="inconsistent-parameter",
-                    )
-                if any("/" in param for param in params):
-                    raise ValidationError(
-                        detail=f'IP parameter "{param_key}" cannot use subnet notation with multiple addresses.',
-                        code="multiple-subnet",
-                    )
-            else:  # one element
-                match param:
-                    case "":
-                        return SetIPs(ips=[])
-                    case "preserve":
-                        return PreserveIPs()
-                    case str(x) if "/" in x:
-                        try:
-                            subnet = ip_network(param, strict=False)
-                            return UpdateWithSubnet(subnet=subnet)
-                        except ValueError as e:
-                            raise ValidationError(
-                                detail=f'IP parameter "{param_key}" is an invalid subnet: {e}',
-                                code="invalid-subnet",
-                            )
-
-            return SetIPs(ips=list(params))
+            action = self._get_action_from_param(param_key, param_value, separator)
+            if action is not None:
+                return action
 
         # Check remote IP address
         client_ip = self.request.META.get("REMOTE_ADDR")
@@ -131,6 +96,72 @@ class DynDNS12UpdateView(generics.GenericAPIView):
 
         # give up
         return SetIPs(ips=[])
+
+    @staticmethod
+    def _get_action_from_param(
+        param_key: str, param_value: str, separator: str
+    ) -> UpdateAction | None:
+        """
+        Parses a single query parameter value to determine the DynDNS update action.
+
+        This function is responsible for interpreting the `param_value` (which can be a single IP,
+        a comma-separated list of IPs, 'preserve', or a CIDR subnet) and converting it into
+        a structured UpdateAction dataclass. It also performs validation on the parameter's format.
+
+        Args:
+            param_key: The name of the query parameter (e.g., 'myip', 'myipv4', 'myipv6', or a qname for extra actions).
+                       Used for error messages.
+            param_value: The string value of the query parameter (e.g., '1.2.3.4', '1.2.3.4,5.6.7.8',
+                         '192.168.1.0/24', 'preserve', or '').
+            separator: The character used to distinguish IP versions (e.g., '.' for IPv4, ':' for IPv6).
+
+        Returns:
+            An instance of SetIPs, UpdateWithSubnet, PreserveIPs, or None if no valid action can be
+            derived from the parameter (e.g., an IPv4 address was given, but IPv6 is required by the separator).
+            Returns SetIPs(ips=[]) if param_value is an empty string.
+
+        Raises:
+            ValidationError: If param_value is invalid (e.g., 'preserve' with addresses)
+        """
+        params = set(
+            filter(
+                lambda param: separator in param or param in ("", "preserve"),
+                map(str.strip, param_value.split(",")),
+            )
+        )
+        if not params:
+            return None
+
+        try:
+            (param,) = params  # unpacks if params has exactly one element
+        except ValueError:  # more than one element
+            if params & {"", "preserve"}:
+                raise ValidationError(
+                    detail=f'IP parameter "{param_key}" cannot have addresses and "preserve" or an empty value at the same time.',
+                    code="inconsistent-parameter",
+                )
+            if any("/" in param for param in params):
+                raise ValidationError(
+                    detail=f'IP parameter "{param_key}" cannot use subnet notation with multiple addresses.',
+                    code="multiple-subnet",
+                )
+        else:  # one element
+            match param:
+                case "":
+                    return SetIPs(ips=[])
+                case "preserve":
+                    return PreserveIPs()
+                case str(x) if "/" in x:
+                    try:
+                        subnet = ip_network(param, strict=False)
+                        return UpdateWithSubnet(subnet=subnet)
+                    except ValueError as e:
+                        raise ValidationError(
+                            detail=f'IP parameter "{param_key}" is an invalid subnet: {e}',
+                            code="invalid-subnet",
+                        )
+
+        return SetIPs(ips=list(params))
 
     @staticmethod
     def _sanitize_qnames(qnames_str) -> set[str]:
@@ -189,10 +220,37 @@ class DynDNS12UpdateView(generics.GenericAPIView):
             )
 
     @cached_property
+    def extra_qname_params(self) -> dict[str, dict[str, str]]:
+        """
+        Parses query parameters of the form 'myipv4:qname' or 'myipv6:qname'
+        to extract additional qnames and their associated update arguments.
+
+        Returns:
+            A dictionary where keys are qnames (e.g., 'sub.example.com') and values
+            are dictionaries mapping RR type ('A' or 'AAAA') to the raw query parameter
+            value (e.g., {'A': '1.2.3.4,5.6.7.8'} or {'AAAA': 'preserve'}).
+        """
+        qnames = defaultdict(dict)
+        param_prefix_types = {"myipv4": "A", "myipv6": "AAAA"}
+
+        for param, value in self.request.query_params.items():
+            try:
+                param_prefix, param_suffix = param.split(":", 1)
+            except ValueError:
+                continue
+            type_ = param_prefix_types[param_prefix]
+
+            for qname in self._sanitize_qnames(param_suffix):
+                qnames[qname][type_] = value
+
+        return qnames
+
+    @cached_property
     def domain(self) -> Domain:
+        qnames = self.qnames | self.extra_qname_params.keys()
         qname_qs = (
             Domain.objects.filter_qname(qname, owner=self.request.user)
-            for qname in self.qnames
+            for qname in qnames
         )
         domains = (
             Domain.objects.none()
@@ -200,7 +258,7 @@ class DynDNS12UpdateView(generics.GenericAPIView):
             .all()
         )
 
-        if len(domains) != len(self.qnames):
+        if len(domains) != len(qnames):  # Some qname doesn't map to a domain
             metrics.get("desecapi_dynDNS12_domain_not_found").inc()
             raise NotFound("nohost")
 
@@ -218,6 +276,26 @@ class DynDNS12UpdateView(generics.GenericAPIView):
     def subnames(self) -> list[str]:
         return [qname.rpartition(f".{self.domain.name}")[0] for qname in self.qnames]
 
+    @cached_property
+    def extra_actions(self) -> dict[tuple[str, str], UpdateAction]:
+        """
+        Converts the raw string arguments from `extra_qname_params` into structured `UpdateAction` objects.
+
+        Returns:
+            A dictionary where keys are `(type, subname)` tuples (e.g., ('A', 'sub'))
+            and values are `UpdateAction` instances (SetIPs, UpdateWithSubnet, PreserveIPs).
+        """
+        return {
+            (
+                type_,
+                qname.rpartition(f".{self.domain.name}")[0],
+            ): self._get_action_from_param(
+                qname, param_value, "." if type_ == "A" else ":"
+            )
+            for qname, param_values_by_type in self.extra_qname_params.items()
+            for type_, param_value in param_values_by_type.items()
+        }
+
     def get_serializer_context(self):
         return {
             **super().get_serializer_context(),
@@ -226,8 +304,12 @@ class DynDNS12UpdateView(generics.GenericAPIView):
         }
 
     def get_queryset(self):
+        subnames = [
+            *self.subnames,
+            *[subname for (_, subname) in self.extra_actions.keys()],
+        ]
         return self.domain.rrset_set.filter(
-            subname__in=self.subnames, type__in=["A", "AAAA"]
+            subname__in=subnames, type__in=["A", "AAAA"]
         ).prefetch_related("records")
 
     @staticmethod
@@ -261,6 +343,12 @@ class DynDNS12UpdateView(generics.GenericAPIView):
             "A": self._find_action(["myip", "myipv4", "ip"], separator="."),
             "AAAA": self._find_action(["myipv6", "ipv6", "myip", "ip"], separator=":"),
         }
+        subname_actions = {
+            (type_, subname): action
+            for subname in self.subnames
+            for type_, action in actions.items()
+        }
+        subname_actions.update(self.extra_actions)
 
         data = [
             {
@@ -269,8 +357,7 @@ class DynDNS12UpdateView(generics.GenericAPIView):
                 "ttl": 60,
                 "records": records,
             }
-            for subname in self.subnames
-            for type_, action in actions.items()
+            for (type_, subname), action in subname_actions.items()
             if (records := self._get_records(subname_records[subname], action))
             is not None
         ]

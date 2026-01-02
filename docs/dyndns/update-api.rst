@@ -98,6 +98,9 @@ If we cannot determine a hostname to update, the API returns a status code of
 ``400 Bad Request`` (if no hostname was given but multiple domains exist in
 the account) or ``404 Not Found`` (if the specified domain was not found).
 
+For assigning different IP addresses to multiple hostnames in one dynDNS
+update request, see `Per-hostname IP Address Specification`_ below.
+
 Subdomains
 ----------
 The dynDNS update API can also be used to update IP records for subdomains.
@@ -108,6 +111,9 @@ Example: Your domain is ``yourdomain.dedyn.io``, and you're using HTTP Basic
 Authentication.  In this case, replace your authentication username with
 ``sub.yourdomain.dedyn.io``.  Similarly, if you use the ``hostname`` query
 parameter, it needs to be set to the full domain name (including subdomain).
+
+For assigning different IP addresses to multiple subdomains in one dynDNS
+update request, see `Per-hostname IP Address Specification`_ below.
 
 .. _determine-ip-addresses:
 
@@ -159,6 +165,29 @@ The host part of the value is ignored.
 
     Note that using an encrypted connection (TLS) does *not* protect against
     this attack, as TLS does not protect the IP address.
+
+
+.. _ip-per-hostname:
+
+Per-hostname IP Address Specification
+-------------------------------------
+For updates involving multiple hostnames (see `Determine Hostname`_ above), it is
+possible to specify IP addresses on a per-hostname basis. This is done by
+appending the hostname to the IP parameter, separated by a colon.
+
+For example, to set the IPv4 address for ``sub.example.com`` to ``1.2.3.4``,
+you would add ``myipv4:sub.example.com=1.2.3.4`` to the query string.
+The ``myipv6`` parameter can be used in the same way.
+
+This allows updating multiple hostnames with different IP addresses in a single
+request. If a per-hostname IP parameter is given, it takes precedence over the
+general IP parameters (like ``myip``, ``myipv4``, ``myipv6``) for that specific
+hostname.
+Semantics is the same as for these general parameters; in particular, the
+``preserve`` keyword and comma-separated lists of IP addresses are supported.
+
+All other hostnames in the request will be updated with the IP addresses from
+the general parameters. All hostnames must belong to the same domain.
 
 Update Response
 ```````````````
@@ -227,4 +256,9 @@ or option 2::
 Update multiple domains simultaneously::
 
   curl "https://update.dedyn.io/?hostname=<your domain>,<your subdomain>&myip=1.2.3.4" \
+    --header "Authorization: Token <your token secret>"
+
+Update multiple domains with different IP addresses (preserves IPv6 address of subdomain)::
+
+  curl "https://update.dedyn.io/?hostname=<your domain>&myipv4=1.2.3.4&myipv4:<your subdomain>=5.6.7.8" \
     --header "Authorization: Token <your token secret>"
