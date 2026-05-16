@@ -238,12 +238,12 @@ class AuthenticatedRRSetBulkTestCase(AuthenticatedRRSetBaseTestCase):
             [
                 {
                     "non_field_errors": [
-                        "RRset with conflicting type present: 1 (CNAME). (No other RRsets are allowed alongside CNAME.)"
+                        "RRset with conflicting type present at same subname: 1 (CNAME). (No other RRsets are allowed alongside CNAME.)"
                     ]
                 },
                 {
                     "non_field_errors": [
-                        "RRset with conflicting type present: 0 (A), database (A, TXT). (No other RRsets are allowed alongside CNAME.)"
+                        "RRset with conflicting type present at same subname: 0 (A), database (A, TXT). (No other RRsets are allowed alongside CNAME.)"
                     ]
                 },
             ],
