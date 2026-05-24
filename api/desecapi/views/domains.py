@@ -3,7 +3,7 @@ from datetime import timezone, datetime
 from django.conf import settings
 from django.core.cache import cache
 from django.db.models import Subquery
-from rest_framework import mixins, viewsets
+from rest_framework import mixins, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated, SAFE_METHODS
 from rest_framework.response import Response
@@ -143,8 +143,17 @@ class SerialListView(APIView):
 
     def get(self, request, *args, **kwargs):
         key = "desecapi.views.serials"
-        serials = cache.get(key)
-        if serials is None:
+        # Determine if the last update is older than 60s and nobody is working on it
+        # If so, start working on it; other workers will keep using the old list
+        our_update = cache.add(f"{key}.sentinel", True, timeout=60)
+        if our_update:
             serials = get_serials()
-            cache.get_or_set(key, serials, timeout=60)
+            cache.set(key, serials, timeout=300)  # long expiration, overwritten 1/min
+        else:
+            serials = cache.get(key)
+            if serials is None:
+                return Response(
+                    data={"detail": "Serial cache not ready"},
+                    status=status.HTTP_409_CONFLICT,
+                )
         return Response(serials)
