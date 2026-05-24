@@ -161,6 +161,16 @@ class DynDNS12UpdateTest(DynDomainOwnerTestCase):
         self.assertStatus(response, status.HTTP_400_BAD_REQUEST)
         self.assertIn("malformed", str(response.data))
 
+    def test_ddclient_dyndns2_v4_weird(self):
+        # These should not throw errors
+        url = self.reverse("v1:dyndns12update")
+        for query_string in [
+            "/https:/update.dedyn.io/example.dedyn.io",
+            "/&myipv4=%3Cpreserve%3E&myipv6=2a00::/64&:8:a:5:8b61",
+        ]:
+            response = self.client.get(f"{url}?{query_string}")
+            self.assertStatus(response, status.HTTP_200_OK)
+
     def test_ddclient_dyndns2_v4_valid_priority(self):
         params = {
             "domain_name": self.my_domain.name,

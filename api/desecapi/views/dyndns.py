@@ -238,7 +238,10 @@ class DynDNS12UpdateView(generics.GenericAPIView):
                 param_prefix, param_suffix = param.split(":", 1)
             except ValueError:
                 continue
-            type_ = param_prefix_types[param_prefix]
+            try:
+                type_ = param_prefix_types[param_prefix]
+            except KeyError:
+                continue
 
             for qname in self._sanitize_qnames(param_suffix):
                 qnames[qname][type_] = value
