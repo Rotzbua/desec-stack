@@ -52,7 +52,7 @@ MIDDLEWARE = (
 
 ROOT_URLCONF = "api.urls"
 
-WSGI_APPLICATION = "desecapi.wsgi.application"
+WSGI_APPLICATION = "api.wsgi.application"
 
 
 DATABASES = {
