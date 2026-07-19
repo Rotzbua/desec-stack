@@ -48,13 +48,13 @@
                 tabindex="2"
                 @click:append="() => (hide_password = !hide_password)"
               />
-              <v-layout class="justify-center">
+              <v-row class="justify-center">
                 <v-checkbox
                   v-model="useSessionStorage"
                   label="Remember me during this browser session"
                   tabindex="3"
                 />
-              </v-layout>
+              </v-row>
               <p class="text-center"><strong>Note:</strong> Login sessions expire after 1 hour of inactivity, or after 7 days at the latest.</p>
             </v-card-text>
             <v-card-actions class="justify-center">

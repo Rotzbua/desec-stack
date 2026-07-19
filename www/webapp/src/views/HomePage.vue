@@ -82,9 +82,9 @@
       </v-row>
       <v-row align="center" class="py-2" justify="center">
         <v-col class="col-12 col-lg-3 py-4">
-          <v-layout class="justify-center">
+          <v-row class="justify-center">
             <img loading="lazy" src="../assets/non-free/icann.logo.svg" alt="ICANN Logo" class="mr-6" style="max-width: 160px; width: 100%"/>
-          </v-layout>
+          </v-row>
         </v-col>
         <v-col class="col-12 col-sm-10 col-lg-9 py-4 text-center">
           In our project "Closing the DNSSEC Maturity Gap through Automation", we develop technical solutions that
@@ -95,9 +95,9 @@
       </v-row>
       <v-row align="center" class="py-2" justify="center">
         <v-col class="col-12 col-lg-3 py-4">
-          <v-layout class="justify-center">
+          <v-row class="justify-center">
             <img loading="lazy" src="../assets/non-free/nlnet.logo.svg" alt="NLnet Foundation Logo" class="mr-6" style="max-width: 180px; width: 100%"/>
-          </v-layout>
+          </v-row>
         </v-col>
         <v-col class="col-12 col-sm-10 col-lg-9 py-4 text-center">
           deSEC received funding through <a class="primary--text text--darken-2" href="https://nlnet.nl/">NLnet
@@ -109,9 +109,9 @@
       </v-row>
       <v-row align="center" class="py-2" justify="center">
         <v-col class="col-12 col-lg-3 py-4">
-          <v-layout class="justify-center">
+          <v-row class="justify-center">
             <img loading="lazy" src="../assets/non-free/ripe-ncc.logo.svg" alt="RIPE NCC Logo" class="mr-6" style="margin-bottom: -7%; margin-top: -7%; max-width: 240px; width: 100%"/>
-          </v-layout>
+          </v-row>
         </v-col>
         <v-col class="col-12 col-sm-10 col-lg-9 py-4 text-center">
           Through their Community Projects Fund, <a class="primary--text text--darken-2" href="https://ripe.net/">RIPE NCC</a>
@@ -121,9 +121,9 @@
       </v-row>
       <v-row align="center" class="py-2" justify="center">
         <v-col class="col-12 col-lg-3 py-4">
-          <v-layout class="justify-center">
+          <v-row class="justify-center">
             <img loading="lazy" src="../assets/non-free/eu.logo.svg" alt="EU Logo" class="mr-6" style="margin-bottom: 0; margin-top: 0; max-width: 200px; width: 100%"/>
-          </v-layout>
+          </v-row>
         </v-col>
         <v-col class="col-12 col-sm-10 col-lg-9 py-4 text-center">
           As a <a class="primary--text text--darken-2" href="https://www.joindns4.eu/">DNS4EU</a> consortium member,
@@ -144,9 +144,9 @@
       </v-row>
       <v-row align="center" class="py-2" justify="center">
         <v-col class="col-12 col-lg-3 py-4">
-          <v-layout class="justify-center">
+          <v-row class="justify-center">
             <a href="https://www.joindns4.eu/"><img loading="lazy" src="../assets/non-free/dns4eu.logo.svg" alt="DNS4EU Logo" class="mr-6" style="margin-bottom: 0; margin-top: 0; max-width: 210px; width: 100%"/></a>
-          </v-layout>
+          </v-row>
         </v-col>
         <v-col class="col-12 col-sm-10 col-lg-9 py-4 text-center">
           DNS4EU is an initiative of the European Commission to provide an EU-based alternative public DNS resolver.

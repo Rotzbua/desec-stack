@@ -15,7 +15,12 @@ export default defineConfig({
             sass: {
                 api: 'modern-compiler',
                 /** @type {import('sass').Options.silenceDeprecations } */
-                silenceDeprecations: ['global-builtin', 'import', 'slash-div'],
+                silenceDeprecations: [
+                    'global-builtin',
+                    'if-function',
+                    'import',
+                    'slash-div',
+                ],
             },
         },
     },

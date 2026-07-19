@@ -210,9 +210,9 @@
               />
             </template>
             <template #[`item.actions`]="itemFieldProps">
-              <v-layout
+              <v-row
                       class="my-1 py-3"
-                      justify-end
+                      justify="end"
               >
                 <div :key="key" v-for="[key, action] in getActions(actions)">
                   <v-tooltip
@@ -236,7 +236,7 @@
                     <span>{{ action.tooltip }}</span>
                   </v-tooltip>
                 </div>
-              </v-layout>
+              </v-row>
             </template>
             <template #no-data>
               <div v-if="!pagination_required">
