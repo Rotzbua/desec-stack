@@ -4,7 +4,7 @@ version: 2
 updates:
   - package-ecosystem: "npm"
     directory: "/"
-    exclude-paths: "www/"
+    exclude-paths: "www"
     schedule:
       interval: "monthly"
       timezone: "Europe/Berlin"
@@ -12,12 +12,12 @@ updates:
       time: "05:00"
     groups:
       npm-webapp:
-        exclude-paths: "www/"
+        exclude-paths: "www"
         patterns:
           - "*"
         dependency-type: "production"
       npm-webapp-dev:
-        exclude-paths: "www/"
+        exclude-paths: "www"
         patterns:
           - "*"
         dependency-type: "development"
