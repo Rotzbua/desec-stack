@@ -5,6 +5,9 @@ updates:
   - package-ecosystem: "npm"
     directory: "www/webapp/"
     exclude-paths:
+      - "/src/modules"
+      - "src/modules"
+      - "src/modules/"
       - "src/modules/*"
       - "src/modules/**"
       - "src/modules/**/*"
