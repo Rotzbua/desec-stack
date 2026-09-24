@@ -2,16 +2,6 @@
 
 version: 2
 updates:
-  - package-ecosystem: "github-actions"
-    directory: "/"
-    schedule:
-      interval: "quarterly"
-      timezone: "Europe/Berlin"
-      time: "05:00"
-    groups:
-      github-actions:
-        patterns:
-          - "*"
   - package-ecosystem: "npm"
     directory: "www/webapp/"
     exclude-paths:
@@ -36,44 +26,3 @@ updates:
         patterns:
           - "*"
         dependency-type: "development"
-  - package-ecosystem: "pip"
-    directory: "api/"
-    schedule:
-      interval: "weekly"
-      timezone: "Europe/Berlin"
-      day: "monday"
-      time: "05:00"
-    groups:
-      pip-api:
-        patterns:
-          - "*"
-        exclude-patterns:
-          - "django"
-          - "djangorestframework"
-        dependency-type: "production"
-      pip-api-dev:
-        patterns:
-          - "*"
-        dependency-type: "development"
-  - package-ecosystem: "pip"
-    directory: "docs/"
-    schedule:
-      interval: "yearly"
-      timezone: "Europe/Berlin"
-      day: "monday"
-      time: "05:00"
-    groups:
-      pip-docs:
-        patterns:
-          - "*"
-  - package-ecosystem: "pip"
-    directory: "test/e2e2/"
-    schedule:
-      interval: "monthly"
-      timezone: "Europe/Berlin"
-      day: "monday"
-      time: "05:00"
-    groups:
-      pip-test-e2e2:
-        patterns:
-          - "*"
