@@ -3,8 +3,18 @@
 version: 2
 updates:
   - package-ecosystem: "npm"
-    directory: "www/webapp/"
+    directory: "/"
     exclude-paths:
+      - "www/webapp/src/modules"
+      - "www/webapp/src/modules/"
+      - "www/webapp/src/modules/*"
+      - "www/webapp/src/modules/**"
+      - "www/webapp/src/modules/**/*"
+      - "www/webapp/src/modules/qrcode.vue/*"
+      - "www/webapp/src/modules/qrcode.vue/**"
+      - "www/webapp/src/modules/qrcode.vue/**/*"
+      - "www/webapp/src/modules/qrcode.vue/package.json"
+      - "www/webapp/src/modules"
       - "/src/modules"
       - "src/modules"
       - "src/modules/"
