@@ -39,12 +39,12 @@
     "eslint-plugin-vue": "^10.0.0",
     "eslint-plugin-vue-scoped-css": "^2.6.1",
     "eslint-plugin-vuetify": "^2.1.1",
-    "globals": "^16.0.0",
-    "jsdom": "^26.1.0",
+    "globals": "^17.12.0",
+    "jsdom": "^30.0.1",
     "sass": "~1.83.4",
     "vite": "^6.0.11",
     "vite-plugin-vuetify": "^2.0.4",
-    "vitest": "^3.2.4",
+    "vitest": "^5.0.1",
     "vue-demi": "^0.14.10"
   },
   "overrides": {
