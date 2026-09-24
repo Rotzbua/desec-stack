@@ -15,6 +15,12 @@ updates:
   - package-ecosystem: "npm"
     directory: "www/webapp/"
     exclude-paths:
+      - "src/modules/*"
+      - "src/modules/**"
+      - "src/modules/**/*"
+      - "src/modules/qrcode.vue/*"
+      - "src/modules/qrcode.vue/**"
+      - "src/modules/qrcode.vue/**/*"
       - "src/modules/qrcode.vue/package.json"
     schedule:
       interval: "monthly"
